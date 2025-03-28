@@ -17,44 +17,11 @@ function NavList() {
         variant='small'
         color='blue-gray'
         className='p-1 font-medium'>
-        <a
-          href='#'
-          className='flex items-center hover:text-blue-500 transition-colors'>
-          Pages
-        </a>
-      </Typography>
-      <Typography
-        as='li'
-        variant='small'
-        color='blue-gray'
-        className='p-1 font-medium'>
-        <a
-          href='#'
-          className='flex items-center hover:text-blue-500 transition-colors'>
-          Account
-        </a>
-      </Typography>
-      <Typography
-        as='li'
-        variant='small'
-        color='blue-gray'
-        className='p-1 font-medium'>
-        <a
-          href='#'
-          className='flex items-center hover:text-blue-500 transition-colors'>
-          Blocks
-        </a>
-      </Typography>
-      <Typography
-        as='li'
-        variant='small'
-        color='blue-gray'
-        className='p-1 font-medium'>
-        <a
-          href='#'
-          className='flex items-center hover:text-blue-500 transition-colors'>
-          Docs
-        </a>
+        <Link
+          to='/aboutus'
+          className='flex items-center hover:text-white transition-colors'>
+          About Us
+        </Link>
       </Typography>
       <Link to='/login' className='p-1 font-medium'>
         <Button size='sm'>LogIn</Button>
@@ -81,17 +48,17 @@ export function NavBar() {
   }, []);
 
   return (
-    <Navbar className='max-w-screen-7xl px-6 py-3 bg-transparent border-none shadow-none h-[11vh]'>
+    <Navbar className='max-w-screen-7xl absolute top-0 left-0 px-6 bg-transparent rounded-none border-b-4 border-t-0 border-l-0 border-r-0 shadow-none backdrop-saturate-[-1] h-[10vh]'>
       <div className='flex items-center justify-between text-blue-gray-900'>
         <Typography
           as={Link}
           to='/'
           href='#'
           variant='h6'
-          className='mr-4 cursor-pointer py-1.5'>
+          className='mr-4 cursor-pointer '>
           <div className=' flex items-center justify-center'>
             <img src='/image14.png' alt='' />
-            <img src='/image13.png' alt='' className='absolute left-[1.5%] ' />
+            <img src='/image13.png' alt='' className='absolute left-[1.5%]' />
           </div>
         </Typography>
         <div className='hidden lg:block'>
