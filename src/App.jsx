@@ -1,5 +1,4 @@
 import { Route, Routes } from "react-router-dom";
-import { NavBar } from "./components/NavBar";
 import { Preview } from "./components/Preview";
 import { LogIn } from "./components/LogIn";
 import { SignUp } from "./components/SignUp";
@@ -7,6 +6,8 @@ import { NotFound } from "./components/NotFound";
 import { Profile } from "./components/Profile";
 import { ForgotPass } from "./components/ForgotPass";
 import { AboutUs } from "./components/AboutUs";
+import { Jobs } from "./components/Jobs";
+import { InterView } from "./components/InterView";
 
 export default function App() {
   return (
@@ -16,6 +17,8 @@ export default function App() {
         <Route path='/login' element={<LogIn />} />
         <Route path='/signup' element={<SignUp />} />
         <Route path='/aboutus' element={<AboutUs />} />
+        <Route path='/jobs' element={<Jobs />} />
+        <Route path='/interview' element={<InterView />} />
         <Route path='/forgotpassword' element={<ForgotPass />} />
         <Route path='/profile' element={<Profile />} />
         <Route path='/*' element={<NotFound />} />

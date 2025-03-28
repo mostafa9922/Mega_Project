@@ -9,13 +9,17 @@ export function SignUp() {
   const [passwordShown, setPasswordShown] = useState(false);
   const togglePasswordVisiblity = () => setPasswordShown((cur) => !cur);
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <section className='flex flex-col text-center h-screen items-center justify-center bg-gradient-to-t from-[#C5DBEB] via-[#4591C8] to-[#183F5B]'>
       <div className='bg-[#F5F9FF] w-[30%] p-4 rounded-lg shadow-lg'>
         <Typography variant='h3' className='mb-2 text-[#2775AD]'>
           Create An Account
         </Typography>
-        <form action='#' className='mx-auto max-w-[24rem] text-left'>
+        <form action={handleSubmit} className='mx-auto max-w-[24rem] text-left'>
           <Button
             variant='outlined'
             size='lg'

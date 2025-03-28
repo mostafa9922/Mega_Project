@@ -1,17 +1,11 @@
-import { NavBar } from "./NavBar";
-import {
-  Card,
-  CardBody,
-  CardFooter,
-  Typography,
-  Button,
-} from "@material-tailwind/react";
+import { NavBar_perview } from "./NavBar_perview";
+import { Card, CardBody, Typography, Button } from "@material-tailwind/react";
 import { LuFolderSearch } from "react-icons/lu";
 
 export const Preview = () => {
   return (
     <div>
-      <NavBar />
+      <NavBar_perview />
       <div className=" bg-[url('/image2.png')] bg-cover w-screen h-screen">
         <div className='flex flex-col items-center justify-center h-screen w-screen gap-10 '>
           <div className='flex flex-col items-start justify-end w-[90%] h-full '>

@@ -3,11 +3,13 @@ import {
   Collapse,
   Typography,
   IconButton,
+  Avatar,
 } from "@material-tailwind/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Button } from "@material-tailwind/react";
+import { IoSettingsOutline } from "react-icons/io5";
+import { IoIosLogOut } from "react-icons/io";
 
 function NavList() {
   return (
@@ -18,22 +20,27 @@ function NavList() {
         color='blue-gray'
         className='p-1 font-medium'>
         <Link
-          to='/aboutus'
+          to='#'
           className='flex items-center hover:text-white transition-colors'>
-          About Us
+          Mostafa Abdelaziz
         </Link>
       </Typography>
-      <Link to='/login' className='p-1 font-medium'>
-        <Button size='sm'>LogIn</Button>
-      </Link>
-      <Link to='/signup' className='p-1 font-medium'>
-        <Button size='sm'>SignUp</Button>
-      </Link>
+      <Avatar
+        src='https://docs.material-tailwind.com/img/face-2.jpg'
+        alt='avatar'
+        size='sm'
+      />
+      <Typography as={Link} to='#'>
+        <IoSettingsOutline className='text-2xl hover:text-white' />
+      </Typography>
+      <Typography as={Link} to='#'>
+        <IoIosLogOut className='text-2xl hover:text-white' />
+      </Typography>
     </ul>
   );
 }
 
-export function NavBar() {
+export function NavBar_User() {
   const [openNav, setOpenNav] = useState(false);
 
   const handleWindowResize = () =>

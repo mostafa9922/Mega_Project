@@ -8,6 +8,10 @@ export function LogIn() {
   const [passwordShown, setPasswordShown] = useState(false);
   const togglePasswordVisiblity = () => setPasswordShown((cur) => !cur);
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <section className='flex flex-col text-center h-screen items-center justify-center bg-gradient-to-t from-[#C5DBEB] via-[#4591C8] to-[#183F5B]'>
       <div className='bg-[#F5F9FF] w-[30%] p-4 rounded-lg shadow-lg'>
@@ -17,7 +21,7 @@ export function LogIn() {
         <Typography className='mb-8 text-gray-600 font-normal text-[18px]'>
           Enter your email and password to sign in
         </Typography>
-        <form action='#' className='mx-auto max-w-[24rem] text-left'>
+        <form action={handleSubmit} className='mx-auto max-w-[24rem] text-left'>
           <div className='mb-6'>
             <label htmlFor='email' className='mb-2 block'>
               <Typography
