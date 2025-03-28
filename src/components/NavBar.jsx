@@ -90,9 +90,9 @@ export function NavBar() {
           variant='h6'
           className='mr-4 cursor-pointer py-1.5'>
           <div className=' flex items-center justify-center'>
-            <img src='/public/image 14.png' alt='' />
+            <img src='/public/image14.png' alt='' />
             <img
-              src='/public/image 13.png'
+              src='/public/image13.png'
               alt=''
               className='absolute left-[1.5%] '
             />
