@@ -95,7 +95,7 @@ export function LogIn() {
         </form>
       </div>
       <div className='logo fixed top-4 left-0 flex flex-row items-center justify-center'>
-        <img src='/public/image14.png' alt='' />
+        <img src='image14.png' alt='' />
         <p className='absolute left-11 text-white top-4 '>OOKUP</p>
       </div>
     </section>
