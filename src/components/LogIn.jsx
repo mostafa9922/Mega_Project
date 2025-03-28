@@ -3,13 +3,19 @@ import { Link } from "react-router-dom";
 
 import { Typography, Input, Button } from "@material-tailwind/react";
 import { EyeSlashIcon, EyeIcon } from "@heroicons/react/24/solid";
+import { Alert } from "@material-tailwind/react";
 
 export function LogIn() {
   const [passwordShown, setPasswordShown] = useState(false);
   const togglePasswordVisiblity = () => setPasswordShown((cur) => !cur);
 
+  const [emptyEmail, setEmptyEmail] = useState(true);
+  const [emptyPassword, setEmptyPassword] = useState(true);
+  const [checked, setChecked] = useState(false);
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    setChecked(true);
   };
 
   return (
@@ -21,7 +27,9 @@ export function LogIn() {
         <Typography className='mb-8 text-gray-600 font-normal text-[18px]'>
           Enter your email and password to sign in
         </Typography>
-        <form action={handleSubmit} className='mx-auto max-w-[24rem] text-left'>
+        <form
+          onSubmit={handleSubmit}
+          className='mx-auto max-w-[24rem] text-left'>
           <div className='mb-6'>
             <label htmlFor='email' className='mb-2 block'>
               <Typography
@@ -30,6 +38,11 @@ export function LogIn() {
                 Your Email
               </Typography>
             </label>
+            <Alert
+              color='red'
+              className={checked && emptyEmail ? "block" : "hidden"}>
+              Enter your name!
+            </Alert>
             <Input
               id='email'
               color='gray'
@@ -51,6 +64,11 @@ export function LogIn() {
                 Password
               </Typography>
             </label>
+            <Alert
+              color='red'
+              className={checked && emptyEmail ? "block" : "hidden"}>
+              Enter your Password!
+            </Alert>
             <Input
               size='lg'
               placeholder='********'
@@ -71,6 +89,7 @@ export function LogIn() {
             />
           </div>
           <Button
+            type='submit'
             color='gray'
             size='lg'
             className='mt-6 bg-[#549acc]'

@@ -4,22 +4,31 @@ import { Typography, Input, Button } from "@material-tailwind/react";
 import { EyeSlashIcon, EyeIcon } from "@heroicons/react/24/solid";
 import { Link } from "react-router-dom";
 import { FaApple } from "react-icons/fa";
+import { Alert } from "@material-tailwind/react";
 
 export function SignUp() {
   const [passwordShown, setPasswordShown] = useState(false);
   const togglePasswordVisiblity = () => setPasswordShown((cur) => !cur);
 
+  const [emptyName, setEmptyName] = useState(true);
+  const [emptyEmail, setEmptyEmail] = useState(true);
+  const [emptyPassword, setEmptyPassword] = useState(true);
+  const [checked, setChecked] = useState(false);
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    setChecked(true);
   };
 
   return (
     <section className='flex flex-col text-center h-screen items-center justify-center bg-gradient-to-t from-[#C5DBEB] via-[#4591C8] to-[#183F5B]'>
       <div className='bg-[#F5F9FF] w-[30%] p-4 rounded-lg shadow-lg'>
-        <Typography variant='h3' className='mb-2 text-[#2775AD]'>
+        <Typography variant='h3' className='text-[#2775AD]'>
           Create An Account
         </Typography>
-        <form action={handleSubmit} className='mx-auto max-w-[24rem] text-left'>
+        <form
+          onSubmit={handleSubmit}
+          className='mx-auto max-w-[24rem] text-left'>
           <Button
             variant='outlined'
             size='lg'
@@ -48,6 +57,11 @@ export function SignUp() {
                 Name
               </Typography>
             </label>
+            <Alert
+              color='red'
+              className={checked && emptyName ? "block" : "hidden"}>
+              Enter your name!
+            </Alert>
             <Input
               id='Name'
               color='gray'
@@ -69,6 +83,11 @@ export function SignUp() {
                 Your Email
               </Typography>
             </label>
+            <Alert
+              color='red'
+              className={checked && emptyEmail ? "block" : "hidden"}>
+              Enter your Email!
+            </Alert>
             <Input
               id='email'
               color='gray'
@@ -90,6 +109,11 @@ export function SignUp() {
                 Password
               </Typography>
             </label>
+            <Alert
+              color='red'
+              className={checked && emptyPassword ? "block" : "hidden"}>
+              Enter your Password!
+            </Alert>
             <Input
               size='lg'
               placeholder='********'
@@ -109,7 +133,11 @@ export function SignUp() {
               }
             />
           </div>
-          <Button size='lg' className='mt-6 bg-[#549acc]' fullWidth>
+          <Button
+            type='submit'
+            size='lg'
+            className='mt-6 bg-[#549acc]'
+            fullWidth>
             Creat Account
           </Button>
           <Typography
