@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-
 import { Typography, Input, Button } from "@material-tailwind/react";
 import { EyeSlashIcon, EyeIcon } from "@heroicons/react/24/solid";
 import { Alert } from "@material-tailwind/react";
@@ -19,17 +18,15 @@ export function LogIn() {
   };
 
   return (
-    <section className='flex flex-col text-center h-screen items-center justify-center bg-gradient-to-t from-[#C5DBEB] via-[#4591C8] to-[#183F5B]'>
-      <div className='bg-[#F5F9FF] w-[30%] p-4 rounded-lg shadow-lg'>
-        <Typography variant='h3' className='mb-2 text-[#2775AD]'>
+    <section className='flex flex-col min-h-screen items-center justify-center bg-gradient-to-t from-[#C5DBEB] via-[#4591C8] to-[#183F5B] px-4 py-16'>
+      <div className='bg-[#F5F9FF] w-full max-w-md p-6 rounded-lg shadow-lg md:max-w-lg lg:max-w-xl'>
+        <Typography variant='h3' className='mb-2 text-[#2775AD] text-center'>
           Log In
         </Typography>
-        <Typography className='mb-8 text-gray-600 font-normal text-[18px]'>
+        <Typography className='mb-8 text-gray-600 font-normal text-[18px] text-center'>
           Enter your email and password to sign in
         </Typography>
-        <form
-          onSubmit={handleSubmit}
-          className='mx-auto max-w-[24rem] text-left'>
+        <form onSubmit={handleSubmit} className='w-full text-left'>
           <div className='mb-6'>
             <label htmlFor='email' className='mb-2 block'>
               <Typography
@@ -40,8 +37,8 @@ export function LogIn() {
             </label>
             <Alert
               color='red'
-              className={checked && emptyEmail ? "block" : "hidden"}>
-              Enter your name!
+              className={checked && emptyEmail ? "block mb-2" : "hidden"}>
+              Enter your email!
             </Alert>
             <Input
               id='email'
@@ -66,7 +63,7 @@ export function LogIn() {
             </label>
             <Alert
               color='red'
-              className={checked && emptyEmail ? "block" : "hidden"}>
+              className={checked && emptyPassword ? "block mb-2" : "hidden"}>
               Enter your Password!
             </Alert>
             <Input
@@ -92,11 +89,10 @@ export function LogIn() {
             type='submit'
             color='gray'
             size='lg'
-            className='mt-6 bg-[#549acc]'
-            fullWidth>
+            className='mt-6 bg-[#549acc] w-full'>
             Log in
           </Button>
-          <div className='!mt-4 flex justify-end'>
+          <div className='mt-4 flex justify-end'>
             <Typography
               as={Link}
               to='/forgotpassword'
@@ -109,7 +105,7 @@ export function LogIn() {
           <Typography
             variant='small'
             color='gray'
-            className='!mt-4 text-center font-normal'>
+            className='mt-4 text-center font-normal'>
             Not registered?{" "}
             <Link to='/signup' className='font-medium text-gray-900'>
               Create account
@@ -117,9 +113,9 @@ export function LogIn() {
           </Typography>
         </form>
       </div>
-      <div className='logo fixed top-4 left-0 flex flex-row items-center justify-center'>
-        <img src='image14.png' alt='' />
-        <p className='absolute left-11 text-white top-4 '>OOKUP</p>
+      <div className='absolute top-4 left-4 flex items-center z-10'>
+        <img src='image14.png' alt='logo' className='w-8 h-8' />
+        <p className='ml-2 text-white'>OOKUP</p>
       </div>
     </section>
   );

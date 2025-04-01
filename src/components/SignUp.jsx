@@ -1,5 +1,4 @@
 import { useState } from "react";
-
 import { Typography, Input, Button } from "@material-tailwind/react";
 import { EyeSlashIcon, EyeIcon } from "@heroicons/react/24/solid";
 import { Link } from "react-router-dom";
@@ -21,34 +20,31 @@ export function SignUp() {
   };
 
   return (
-    <section className='flex flex-col text-center h-screen items-center justify-center bg-gradient-to-t from-[#C5DBEB] via-[#4591C8] to-[#183F5B]'>
-      <div className='bg-[#F5F9FF] w-[30%] p-4 rounded-lg shadow-lg'>
-        <Typography variant='h3' className='text-[#2775AD]'>
+    <section className='flex flex-col min-h-screen items-center justify-center bg-gradient-to-t from-[#C5DBEB] via-[#4591C8] to-[#183F5B] px-4 py-12 lg:py-6'>
+      <div className='bg-[#F5F9FF] w-full max-w-md p-6 rounded-lg shadow-lg md:max-w-lg lg:max-w-xl'>
+        <Typography variant='h3' className='text-[#2775AD] mb-4 text-center'>
           Create An Account
         </Typography>
-        <form
-          onSubmit={handleSubmit}
-          className='mx-auto max-w-[24rem] text-left'>
+        <form onSubmit={handleSubmit} className='w-full text-left'>
           <Button
             variant='outlined'
             size='lg'
-            className='mt-6 flex h-12 items-center justify-center gap-2'
-            fullWidth>
+            className='mt-6 flex h-12 items-center justify-center gap-2 w-full'>
             <img
               src={`https://www.material-tailwind.com/logos/logo-google.png`}
               alt='google'
               className='h-6 w-6'
-            />{" "}
-            Continue with google
+            />
+            Continue with Google
           </Button>
           <Button
             variant='outlined'
             size='lg'
-            className='my-4 flex h-12 items-center justify-center gap-2'
-            fullWidth>
-            <FaApple className='text-3xl' />
+            className='my-4 flex h-12 items-center justify-center gap-2 w-full'>
+            <FaApple className='text-2xl' />
             Continue with Apple
           </Button>
+
           <div className='mb-6'>
             <label htmlFor='Name'>
               <Typography
@@ -59,7 +55,7 @@ export function SignUp() {
             </label>
             <Alert
               color='red'
-              className={checked && emptyName ? "block" : "hidden"}>
+              className={checked && emptyName ? "block mb-2" : "hidden"}>
               Enter your name!
             </Alert>
             <Input
@@ -75,6 +71,7 @@ export function SignUp() {
               }}
             />
           </div>
+
           <div className='mb-6'>
             <label htmlFor='email'>
               <Typography
@@ -85,7 +82,7 @@ export function SignUp() {
             </label>
             <Alert
               color='red'
-              className={checked && emptyEmail ? "block" : "hidden"}>
+              className={checked && emptyEmail ? "block mb-2" : "hidden"}>
               Enter your Email!
             </Alert>
             <Input
@@ -101,6 +98,7 @@ export function SignUp() {
               }}
             />
           </div>
+
           <div className='mb-6'>
             <label htmlFor='password'>
               <Typography
@@ -111,7 +109,7 @@ export function SignUp() {
             </label>
             <Alert
               color='red'
-              className={checked && emptyPassword ? "block" : "hidden"}>
+              className={checked && emptyPassword ? "block mb-2" : "hidden"}>
               Enter your Password!
             </Alert>
             <Input
@@ -133,27 +131,26 @@ export function SignUp() {
               }
             />
           </div>
-          <Button
-            type='submit'
-            size='lg'
-            className='mt-6 bg-[#549acc]'
-            fullWidth>
-            Creat Account
+
+          <Button type='submit' size='lg' className='mt-6 bg-[#549acc] w-full'>
+            Create Account
           </Button>
+
           <Typography
             variant='small'
             color='gray'
-            className='!mt-4 text-center font-normal'>
-            Aleardy have an account?{" "}
+            className='mt-4 text-center font-normal'>
+            Already have an account?{" "}
             <Link to='/login' className='font-medium text-gray-900'>
               Log In
             </Link>
           </Typography>
         </form>
       </div>
-      <div className='logo fixed top-4 left-0 flex flex-row items-center justify-center'>
-        <img src='/image14.png' alt='' />
-        <p className='absolute left-11 text-white top-4 '>OOKUP</p>
+
+      <div className='absolute top-4 left-4 flex items-center'>
+        <img src='/image14.png' alt='logo' className='w-8 h-8' />
+        <p className='ml-2 text-white'>OOKUP</p>
       </div>
     </section>
   );
