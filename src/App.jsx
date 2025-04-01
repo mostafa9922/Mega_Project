@@ -9,6 +9,9 @@ import { AboutUs } from "./components/AboutUs";
 import { Jobs } from "./components/Jobs";
 import { InterView } from "./components/InterView";
 import { ContactUs } from "./components/ContactUs";
+import { CheckEmail } from "./components/CheckEmail";
+import { SetNewPass } from "./components/SetNewPass";
+import { Confirmation } from "./components/Confirmation";
 
 export default function App() {
   return (
@@ -21,6 +24,9 @@ export default function App() {
         <Route path='/jobs' element={<Jobs />} />
         <Route path='/interview' element={<InterView />} />
         <Route path='/contact-us' element={<ContactUs />} />
+        <Route path='/check-email' element={<CheckEmail />} />
+        <Route path='/setnewpassword' element={<SetNewPass />} />
+        <Route path='/confirmation' element={<Confirmation />} />
         <Route path='/forgotpassword' element={<ForgotPass />} />
         <Route path='/profile' element={<Profile />} />
         <Route path='/*' element={<NotFound />} />
