@@ -9,25 +9,41 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@material-tailwind/react";
 
-function NavList() {
+function NavList({ isMobile = false }) {
   return (
-    <ul className='my-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6'>
-      <Typography
-        as='li'
-        variant='small'
-        color='blue-gray'
-        className='p-1 font-medium'>
+    <ul
+      className={`my-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6 ${
+        isMobile ? "bg-white p-4 rounded-lg" : ""
+      }`}>
+      <Typography as='li' variant='small' className='p-1 font-medium'>
         <Link
           to='/aboutus'
-          className='flex items-center hover:text-white transition-colors'>
+          className={`flex items-center transition-colors text-sm uppercase ${
+            isMobile
+              ? "text-gray-800 hover:text-gray-600"
+              : "text-white hover:text-gray-200"
+          }`}>
           About Us
         </Link>
       </Typography>
       <Link to='/login' className='p-1 font-medium'>
-        <Button size='sm'>LogIn</Button>
+        <Button
+          size='sm'
+          variant='text'
+          className={`${
+            isMobile
+              ? "text-white bg-[#214560] hover:bg-[#173247]"
+              : "text-white bg-[#214560] hover:bg-white/20"
+          } transition text-sm uppercase`}>
+          Log In
+        </Button>
       </Link>
       <Link to='/signup' className='p-1 font-medium'>
-        <Button size='sm'>SignUp</Button>
+        <Button
+          size='sm'
+          className='bg-green-500 text-white hover:bg-green-600 transition text-sm uppercase'>
+          Sign Up
+        </Button>
       </Link>
     </ul>
   );
@@ -55,18 +71,27 @@ export function NavBar_perview() {
           to='/'
           href='#'
           variant='h6'
-          className='mr-4 cursor-pointer '>
-          <div className=' flex items-center justify-center'>
-            <img src='/image14.png' alt='' />
-            <img src='/image13.png' alt='' className='absolute left-[1.5%]' />
+          className='mr-4 cursor-pointer'>
+          <div className='flex items-center gap-1'>
+            {/* Logo Images */}
+            <div className='relative'>
+              <img src='/image14.png' alt='Main Logo' className='w-10 h-10' />
+              <img
+                src='/image13.png'
+                alt='Sub Logo'
+                className='absolute left-2 top-1 w-8 h-8'
+              />
+            </div>
+            {/* Name Beside the Images */}
+            <span className='text-white text-lg font-bold'>OOKUP</span>
           </div>
         </Typography>
         <div className='hidden lg:block'>
-          <NavList />
+          <NavList isMobile={false} />
         </div>
         <IconButton
           variant='text'
-          className='ml-auto h-6 w-6 text-inherit hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden'
+          className='ml-auto h-6 w-6 text-white hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden'
           ripple={false}
           onClick={() => setOpenNav(!openNav)}>
           {openNav ? (
@@ -77,7 +102,7 @@ export function NavBar_perview() {
         </IconButton>
       </div>
       <Collapse open={openNav}>
-        <NavList />
+        <NavList isMobile={true} />
       </Collapse>
     </Navbar>
   );

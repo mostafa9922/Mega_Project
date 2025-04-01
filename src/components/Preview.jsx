@@ -4,71 +4,97 @@ import { LuFolderSearch } from "react-icons/lu";
 
 export const Preview = () => {
   return (
-    <div>
+    <div className='min-h-screen bg-gradient-to-b from-[#4591C8] to-[#2A5A8E]'>
       <NavBar_perview />
-      <div className=" bg-[url('/image2.png')] bg-cover w-screen h-screen">
-        <div className='flex flex-col items-center justify-center h-screen w-screen gap-10 '>
-          <div className='flex flex-col items-start justify-end w-[90%] h-full '>
-            <h1 className='text-5xl font-bold text-white mb-4'>
-              Job Search, Resume Review
-            </h1>
-            <h1 className='text-5xl font-bold text-white mb-4'>
-              & Interview Prep
-            </h1>
-            <div className='flex flex-row items-center justify-center gap-10'>
-              <h1 className='text-5xl font-bold text-[#00000085] '>
-                All in One!
+      <div className="w-full min-h-screen bg-[url('/image2.png')] bg-cover bg-center">
+        {/* Add padding-top to offset the fixed navbar */}
+        <div className='pt-[8vh] flex items-center justify-center min-h-screen'>
+          <div className='container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16 flex flex-col items-center justify-center gap-6 sm:gap-8'>
+            {/* Header Section */}
+            <div className='text-center w-full max-w-2xl'>
+              <h1 className='text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-1 sm:mb-2'>
+                Job Search, Resume Review
               </h1>
-              <Button className='bg-[#214560]'>Get Started</Button>
+              <h1 className='text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-1 sm:mb-2'>
+                & Interview Prep
+              </h1>
+              <div className='flex flex-col items-center justify-center gap-3 sm:gap-4'>
+                <h2 className='text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-white'>
+                  All in One!
+                </h2>
+                <Button
+                  className='bg-[#214560] px-4 py-2 sm:px-6 sm:py-3 text-sm sm:text-base md:text-lg uppercase font-semibold rounded-full shadow-md hover:bg-[#173247] transition'
+                  aria-label='Get started with job search'>
+                  Get Started
+                </Button>
+              </div>
             </div>
-          </div>
-          <div className='flex flex-col lg:flex-row items-center justify-start w-[90%] mb-10 gap-20 '>
-            <Card className='mt-6 w-96 text-center'>
-              <CardBody>
-                <Typography className='flex flex-col items-center'>
-                  <LuFolderSearch className='text-9xl ' />
-                </Typography>
-                <Typography variant='h5' color='blue-gray' className='mb-2'>
-                  Find Your Dream Job
-                </Typography>
-                <Typography>
-                  Browse thousands of job listings. Get personalized job
-                  recommendations. Apply with one click.
-                </Typography>
-              </CardBody>
-            </Card>
-            <Card className='mt-6 w-96 text-center'>
-              <CardBody>
-                <Typography className='flex flex-col items-center'>
-                  <LuFolderSearch className='text-9xl ' />
-                </Typography>
-                <Typography variant='h5' color='blue-gray' className='mb-2'>
-                  Find Your Dream Job{" "}
-                </Typography>
-                <Typography>
-                  Browse thousands of job listings. Get personalized job
-                  recommendations. Apply with one click.
-                </Typography>
-              </CardBody>
-            </Card>
-            <Card className='mt-6 w-96 text-center'>
-              <CardBody>
-                <Typography className='flex flex-col items-center'>
-                  <LuFolderSearch className='text-9xl ' />
-                </Typography>
-                <Typography variant='h5' color='blue-gray' className='mb-2'>
-                  Find Your Dream Job{" "}
-                </Typography>
-                <Typography>
-                  Browse thousands of job listings. Get personalized job
-                  recommendations. Apply with one click.
-                </Typography>
-              </CardBody>
-            </Card>
+
+            {/* Cards Section */}
+            <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 w-full max-w-5xl'>
+              {/* Card 1 */}
+              <Card className='w-full bg-white rounded-lg shadow-md hover:shadow-lg transition'>
+                <CardBody className='flex flex-col items-center gap-3 sm:gap-4 p-4 sm:p-6'>
+                  <LuFolderSearch
+                    className='text-3xl sm:text-4xl md:text-5xl text-gray-500'
+                    aria-hidden='true'
+                  />
+                  <Typography
+                    variant='h5'
+                    color='blue-gray'
+                    className='text-base sm:text-lg md:text-xl font-semibold'>
+                    Find Your Dream Job
+                  </Typography>
+                  <Typography className='text-xs sm:text-sm md:text-base text-gray-600'>
+                    Browse thousands of job listings, get personalized
+                    recommendations, and apply easily.
+                  </Typography>
+                </CardBody>
+              </Card>
+
+              {/* Card 2 */}
+              <Card className='w-full bg-white rounded-lg shadow-md hover:shadow-lg transition'>
+                <CardBody className='flex flex-col items-center gap-3 sm:gap-4 p-4 sm:p-6'>
+                  <LuFolderSearch
+                    className='text-3xl sm:text-4xl md:text-5xl text-gray-500'
+                    aria-hidden='true'
+                  />
+                  <Typography
+                    variant='h5'
+                    color='blue-gray'
+                    className='text-base sm:text-lg md:text-xl font-semibold'>
+                    Perfect Your Resume
+                  </Typography>
+                  <Typography className='text-xs sm:text-sm md:text-base text-gray-600'>
+                    Upload your resume and get expert suggestions to make it
+                    stand out.
+                  </Typography>
+                </CardBody>
+              </Card>
+
+              {/* Card 3 */}
+              <Card className='w-full bg-white rounded-lg shadow-md hover:shadow-lg transition'>
+                <CardBody className='flex flex-col items-center gap-3 sm:gap-4 p-4 sm:p-6'>
+                  <LuFolderSearch
+                    className='text-3xl sm:text-4xl md:text-5xl text-gray-500'
+                    aria-hidden='true'
+                  />
+                  <Typography
+                    variant='h5'
+                    color='blue-gray'
+                    className='text-base sm:text-lg md:text-xl font-semibold'>
+                    Ace Your Interviews
+                  </Typography>
+                  <Typography className='text-xs sm:text-sm md:text-base text-gray-600'>
+                    Practice with AI-powered mock interviews and get instant
+                    feedback.
+                  </Typography>
+                </CardBody>
+              </Card>
+            </div>
           </div>
         </div>
       </div>
-      <div className='layer absolute top-0 left-0 h-screen w-screen bg-gradient-radial from-[#F4F4F4] via-[#4591C8] to-[#4591C8] z-[-1]'></div>
     </div>
   );
 };
