@@ -14,6 +14,12 @@ export function LogIn() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (e.target.email.value !== "") {
+      setEmptyEmail(false);
+    }
+    if (e.target.password.value !== "") {
+      setEmptyPassword(false);
+    }
     setChecked(true);
   };
 
@@ -69,6 +75,7 @@ export function LogIn() {
             <Input
               size='lg'
               placeholder='********'
+              name='password'
               labelProps={{
                 className: "hidden",
               }}
@@ -114,8 +121,10 @@ export function LogIn() {
         </form>
       </div>
       <div className='absolute top-4 left-4 flex items-center z-10'>
-        <img src='image14.png' alt='logo' className='w-8 h-8' />
-        <p className='ml-2 text-white'>OOKUP</p>
+        <Link to='/' className='flex items-center'>
+          <img src='image14.png' alt='logo' className='w-8 h-8' />
+          <p className='ml-2 text-white'>OOKUP</p>
+        </Link>
       </div>
     </section>
   );

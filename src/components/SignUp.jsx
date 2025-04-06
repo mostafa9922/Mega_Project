@@ -17,6 +17,15 @@ export function SignUp() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setChecked(true);
+    if (e.target.Name.value !== "") {
+      setEmptyName(false);
+    }
+    if (e.target.email.value !== "") {
+      setEmptyEmail(false);
+    }
+    if (e.target.password.value !== "") {
+      setEmptyPassword(false);
+    }
   };
 
   return (
@@ -115,6 +124,7 @@ export function SignUp() {
             <Input
               size='lg'
               placeholder='********'
+              name='password'
               labelProps={{
                 className: "hidden",
               }}
@@ -149,8 +159,10 @@ export function SignUp() {
       </div>
 
       <div className='absolute top-4 left-4 flex items-center'>
-        <img src='/image14.png' alt='logo' className='w-8 h-8' />
-        <p className='ml-2 text-white'>OOKUP</p>
+        <Link to='/' className='flex items-center'>
+          <img src='image14.png' alt='logo' className='w-8 h-8' />
+          <p className='ml-2 text-white'>OOKUP</p>
+        </Link>
       </div>
     </section>
   );
