@@ -1,14 +1,18 @@
 import { useState } from "react";
 import { Typography, Input, Button } from "@material-tailwind/react";
 import { Alert } from "@material-tailwind/react";
+import { Link } from "react-router-dom";
 
 export function ForgotPass() {
-
   const [emptyEmail, setEmptyEmail] = useState(true);
   const [checked, setChecked] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (e.target.email.value !== "") {
+      setEmptyEmail(false);
+      return;
+    }
     setChecked(true);
   };
 
@@ -58,8 +62,10 @@ export function ForgotPass() {
         </form>
       </div>
       <div className='absolute top-4 left-4 flex items-center z-10'>
-        <img src='image14.png' alt='logo' className='w-8 h-8' />
-        <p className='ml-2 text-white'>OOKUP</p>
+        <Link to='/' className='flex items-center'>
+          <img src='image14.png' alt='logo' className='w-8 h-8' />
+          <p className='ml-2 text-white'>OOKUP</p>
+        </Link>
       </div>
     </section>
   );

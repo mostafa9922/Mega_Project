@@ -1,6 +1,5 @@
 import { useState, useRef } from "react";
-import { Typography, Input, Button } from "@material-tailwind/react";
-import { Alert } from "@material-tailwind/react";
+import { Typography, Input, Button, Alert } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 
 export function CheckEmail() {
@@ -9,20 +8,32 @@ export function CheckEmail() {
   const inputRefs = useRef([]);
 
   const handleChange = (index, value) => {
-    if (!/^\d*$/.test(value)) return; // Only allow digits
+    if (!/^\d*$/.test(value)) return;
+
     const newCode = [...code];
-    newCode[index] = value.slice(0, 1); // Limit to 1 digit
+    newCode[index] = value.slice(0, 1);
     setCode(newCode);
 
-    // Auto-focus next input
+    // Move to next input if value is entered
     if (value && index < 4) {
-      inputRefs.current[index + 1].focus();
+      inputRefs.current[index + 1]?.focus();
     }
   };
 
   const handleKeyDown = (index, e) => {
-    if (e.key === "Backspace" && !code[index] && index > 0) {
-      inputRefs.current[index - 1].focus();
+    if (e.key === "Backspace") {
+      if (code[index]) {
+        // Case 1: If there's a digit in the current box, just clear it
+        const newCode = [...code];
+        newCode[index] = "";
+        setCode(newCode);
+      } else if (index > 0) {
+        // Case 2: If it's empty, move to the previous box and clear that one
+        inputRefs.current[index - 1]?.focus();
+        const newCode = [...code];
+        newCode[index - 1] = "";
+        setCode(newCode);
+      }
     }
   };
 
@@ -59,19 +70,20 @@ export function CheckEmail() {
               {code.map((digit, index) => (
                 <Input
                   key={index}
-                  ref={(el) => (inputRefs.current[index] = el)}
                   type='text'
                   inputMode='numeric'
                   maxLength={1}
                   value={digit}
                   onChange={(e) => handleChange(index, e.target.value)}
                   onKeyDown={(e) => handleKeyDown(index, e)}
+                  inputRef={(el) => (inputRefs.current[index] = el)}
                   color='gray'
                   size='lg'
                   placeholder='0'
                   className='w-12 h-12 text-center text-xl font-bold placeholder:opacity-50 focus:border-[#2775AD] border-t-blue-gray-200'
                   containerProps={{ className: "min-w-[48px]" }}
                   labelProps={{ className: "hidden" }}
+                  autoFocus={index === 0}
                 />
               ))}
             </div>
