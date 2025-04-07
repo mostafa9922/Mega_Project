@@ -1,11 +1,14 @@
 import { useState, useRef } from "react";
 import { Typography, Input, Button, Alert } from "@material-tailwind/react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 
 export function CheckEmail() {
   const [code, setCode] = useState(["", "", "", "", ""]);
   const [error, setError] = useState(false);
   const inputRefs = useRef([]);
+  const location = useLocation();
+  const email = location.state?.email;
 
   const handleChange = (index, value) => {
     if (!/^\d*$/.test(value)) return;
@@ -56,8 +59,8 @@ export function CheckEmail() {
         </Typography>
         <Typography className='mb-8 text-gray-600 font-normal text-[18px] text-center'>
           We sent a 5-digit code to{" "}
-          <span className='font-semibold'>contact@dscode.com</span>. Enter it
-          below to reset your password.
+          <span className='font-semibold'>{email}</span>. Enter it below to
+          reset your password.
         </Typography>
         <form onSubmit={handleSubmit} className='w-full text-center'>
           <div className='mb-6'>
@@ -113,3 +116,21 @@ export function CheckEmail() {
 }
 
 export default CheckEmail;
+
+const Msg = ({ closeToast, toastProps }) => (
+  <div>code has sent to your email</div>
+);
+
+function Msg1() {
+  const displayMsg = () => {
+    toast(Msg);
+    // toast(<Msg />) would also work
+  };
+
+  return (
+    <div>
+      <button onClick={displayMsg}>Click me</button>
+      <ToastContainer />
+    </div>
+  );
+}

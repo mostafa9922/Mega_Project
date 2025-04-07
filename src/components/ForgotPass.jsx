@@ -2,15 +2,19 @@ import { useState } from "react";
 import { Typography, Input, Button } from "@material-tailwind/react";
 import { Alert } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 export function ForgotPass() {
   const [emptyEmail, setEmptyEmail] = useState(true);
   const [checked, setChecked] = useState(false);
-
+  const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
     if (e.target.email.value !== "") {
       setEmptyEmail(false);
+      // Simulate an API call
+      navigate("/check-email", {
+        state: { email: e.target.email.value },
+      });
       return;
     }
     setChecked(true);
