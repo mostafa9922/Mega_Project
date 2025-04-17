@@ -32,8 +32,8 @@ export function Confirmation() {
       </div>
       <div className='absolute top-4 left-4 flex items-center z-10'>
         <Link to='/' className='flex items-center'>
-          <img src='image14.png' alt='logo' className='w-8 h-8' />
-          <p className='ml-2 text-white'>OOKUP</p>
+          <img src='/image 14.png' alt='logo' className='w-14 h-8' />
+          <img src='/ookup.png' alt='' className='w-14 h-8' />
         </Link>
       </div>
     </section>
