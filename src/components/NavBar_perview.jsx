@@ -17,11 +17,18 @@ function NavList({ isMobile = false }) {
       }`}>
       <Typography as='li' variant='small' className='p-1 font-medium'>
         <Link
+          to=''
+          className={`flex items-center transition-colors text-sm uppercase ${
+            isMobile ? "text-gray-800" : "hover:text-[#183F5B]"
+          }`}>
+          Features
+        </Link>
+      </Typography>
+      <Typography as='li' variant='small' className='p-1 font-medium'>
+        <Link
           to='/aboutus'
           className={`flex items-center transition-colors text-sm uppercase ${
-            isMobile
-              ? "text-gray-800 hover:text-gray-600"
-              : "text-white hover:text-gray-200"
+            isMobile ? "text-gray-800" : "hover:text-[#183F5B]"
           }`}>
           About Us
         </Link>
@@ -33,7 +40,7 @@ function NavList({ isMobile = false }) {
           className={`${
             isMobile
               ? "text-white bg-[#214560] hover:bg-[#173247]"
-              : "text-white bg-[#214560] hover:bg-white/20"
+              : "text-white bg-[#214560] hover:bg-[#214560]"
           } transition text-sm uppercase`}>
           Log In
         </Button>
@@ -64,7 +71,7 @@ export function NavBar_perview() {
   }, []);
 
   return (
-    <Navbar className='max-w-screen-7xl absolute top-0 left-0 px-6 bg-transparent rounded-none border-b-4 border-t-0 border-l-0 border-r-0 shadow-none backdrop-saturate-[-1] h-[10vh]'>
+    <Navbar className='max-w-screen-7xl px-6 bg-transparent rounded-none border-none shadow-none backdrop-saturate-[-1]'>
       <div className='flex items-center justify-between text-blue-gray-900'>
         <Typography
           as={Link}
@@ -72,18 +79,9 @@ export function NavBar_perview() {
           href='#'
           variant='h6'
           className='mr-4 cursor-pointer'>
-          <div className='flex items-center gap-1'>
-            {/* Logo Images */}
-            <div className='relative'>
-              <img src='/image14.png' alt='Main Logo' className='w-10 h-10' />
-              <img
-                src='/image13.png'
-                alt='Sub Logo'
-                className='absolute left-2 top-1 w-8 h-8'
-              />
-            </div>
-            {/* Name Beside the Images */}
-            <span className='text-white text-lg font-bold'>OOKUP</span>
+          <div className='flex items-center flex-row'>
+            <img src='/image 14.png' alt='Main Logo' className='w-14 h-10' />
+            <img src='/ookup.png' alt='Sub Logo' className=' w-14 h-8' />
           </div>
         </Typography>
         <div className='hidden lg:block'>
