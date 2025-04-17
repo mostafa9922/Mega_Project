@@ -16,6 +16,7 @@ export function ContactUs() {
     message: "",
     inquiryType: "General inquiry",
   });
+
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [error, setError] = useState("");
 
@@ -24,17 +25,17 @@ export function ContactUs() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleInquiryType = (type) => {
-    setFormData((prev) => ({ ...prev, inquiryType: type }));
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!formData.firstName || !formData.email || !formData.message) {
+
+    const { firstName, email, message } = formData;
+
+    if (!firstName || !email || !message) {
       setError("Please fill out all required fields.");
       return;
     }
-    if (!/\S+@\S+\.\S+/.test(formData.email)) {
+
+    if (!/\S+@\S+\.\S+/.test(email)) {
       setError("Please enter a valid email address.");
       return;
     }
@@ -42,13 +43,14 @@ export function ContactUs() {
     setError("");
     setIsSubmitted(true);
     console.log("Form submitted:", formData); // Replace with actual API call
-    setTimeout(() => setIsSubmitted(false), 3000); // Reset after 3 seconds
+
+    setTimeout(() => setIsSubmitted(false), 3000);
   };
 
   return (
-    <section className='px-8 py-8 lg:py-16 bg-gradient-to-b from-[#4591C8] to-[#2A5A8E] min-h-screen'>
+    <section className='bg-gradient-to-b pb-10 from-[#4591C8] to-[#2A5A8E] min-h-screen'>
       <NavBar_perview />
-      <div className='container mx-auto text-center pt-8'>
+      <div className='container mx-auto text-center px-2'>
         <Typography
           variant='h5'
           color='white'
@@ -82,36 +84,6 @@ export function ContactUs() {
           <form
             onSubmit={handleSubmit}
             className='flex flex-col gap-6 lg:max-w-md w-full bg-white/10 p-6 rounded-xl shadow-lg backdrop-blur-md'>
-            <Typography
-              variant='small'
-              className='text-left !font-semibold text-white'>
-              Select Options for Business Engagement
-            </Typography>
-            <div className='flex gap-4'>
-              <Button
-                variant={
-                  formData.inquiryType === "General inquiry"
-                    ? "filled"
-                    : "outlined"
-                }
-                color='white'
-                className='max-w-fit transition-all'
-                onClick={() => handleInquiryType("General inquiry")}>
-                General Inquiry
-              </Button>
-              <Button
-                variant={
-                  formData.inquiryType === "Product Support"
-                    ? "filled"
-                    : "outlined"
-                }
-                color='white'
-                className='max-w-fit transition-all'
-                onClick={() => handleInquiryType("Product Support")}>
-                Product Support
-              </Button>
-            </div>
-
             <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
               <div>
                 <Typography

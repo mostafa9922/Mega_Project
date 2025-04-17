@@ -6,19 +6,36 @@ import { Link } from "react-router-dom";
 
 const features = [
   {
-    title: "Find Your Dream Job",
-    description:
-      "Browse thousands of job listings, get personalized recommendations, and apply easily.",
+    title: "Create Account",
+    description: "First you have to create a account  here",
   },
   {
-    title: "Perfect Your Resume",
+    title: "Find your dream job  ",
+    description: "Search the best freelance work here",
+  },
+  {
+    title: "Save and apply",
+    description: "Apply or save and start your work",
+  },
+];
+const features2 = [
+  {
+    title: "Find Your Dream Job",
     description:
-      "Upload your resume and get expert suggestions to make it stand out.",
+      "Browse thousands of job listings.Get personalized job recommendations.Apply with one click",
+    image: "/hugeicons_job-search.png",
+  },
+  {
+    title: "Perfect Your Resume  ",
+    description:
+      "AI-powered resume analysis.Get instant feedback & optimization tips.Stand out to recruiters.",
+    image: "/qlementine-icons_resume-16.png",
   },
   {
     title: "Ace Your Interviews",
     description:
-      "Practice with AI-powered mock interviews and get instant feedback.",
+      "AI-driven mock interviews.Common interview questions & answers.Personalized feedback to boost confidence.",
+    image: "/codicon_verified.png",
   },
 ];
 
@@ -71,18 +88,19 @@ export const Preview = () => {
                   className='w-full rounded-none shadow-none'
                   aria-labelledby={`feature-title-${index}`}>
                   <CardBody className='flex flex-col items-center gap-3 p-4'>
-                    <LuFolderSearch
-                      className='text-4xl sm:text-5xl text-gray-500'
-                      aria-hidden='true'
+                    <img
+                      src={`/Group ${index + 1}.png`}
+                      alt={`Feature ${index + 1}`}
+                      className='w-auto h-20 object-contain'
+                      loading='lazy'
                     />
                     <Typography
                       id={`feature-title-${index}`}
                       variant='h5'
-                      color='blue-gray'
-                      className='text-lg sm:text-xl font-semibold text-center'>
+                      className='text-lg sm:text-xl font-semibold text-center text-[#252525]'>
                       {feature.title}
                     </Typography>
-                    <Typography className='text-sm sm:text-base text-gray-600 text-center'>
+                    <Typography className='text-sm sm:text-base text-[#9D9D9D] text-center'>
                       {feature.description}
                     </Typography>
                   </CardBody>
@@ -98,7 +116,7 @@ export const Preview = () => {
           Trusted by thousands of job seekers and employers
         </Typography>
 
-        <div className='flex flex-wrap items-center justify-center gap-6 mt-8'>
+        <div className='flex flex-wrap items-center justify-center gap-12 mt-8'>
           <img
             src='/CoinBase.png'
             alt='CoinBase Logo'
@@ -129,6 +147,33 @@ export const Preview = () => {
             alt='Spotify Logo'
             className='h-10 sm:h-12 object-contain'
           />
+        </div>
+      </div>
+
+      <div className='mt-16 sm:mt-32 text-center px-4'>
+        <div className='relative w-full px-4 sm:px-6 mb-12'>
+          <div className='grid grid-cols-1 sm:grid-cols-3 gap-10 p-4 sm:p-6 max-w-6xl mx-auto'>
+            {features2.map((feature, index) => (
+              <Card
+                key={index}
+                className='w-full rounded-xl shadow-xl'
+                aria-labelledby={`feature-title-${index}`}>
+                <CardBody className='flex flex-col items-center gap-3 p-4'>
+                  <img src={`${feature.image}`} alt='' />
+                  <Typography
+                    id={`feature-title-${index}`}
+                    variant='h5'
+                    color='blue-gray'
+                    className='text-lg sm:text-xl font-semibold text-center'>
+                    {feature.title}
+                  </Typography>
+                  <Typography className='text-sm sm:text-base text-gray-600 text-center'>
+                    {feature.description}
+                  </Typography>
+                </CardBody>
+              </Card>
+            ))}
+          </div>
         </div>
       </div>
 
