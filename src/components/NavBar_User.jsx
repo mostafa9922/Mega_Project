@@ -21,7 +21,7 @@ function NavList() {
         className='p-1 font-medium'>
         <Link
           to='#'
-          className='flex items-center hover:text-white transition-colors'>
+          className='flex items-center hover:text-gray-600 transition-colors'>
           Mostafa Abdelaziz
         </Link>
       </Typography>
@@ -31,10 +31,10 @@ function NavList() {
         size='sm'
       />
       <Typography as={Link} to='#'>
-        <IoSettingsOutline className='text-2xl hover:text-white' />
+        <IoSettingsOutline className='text-2xl hover:text-gray-600' />
       </Typography>
       <Typography as={Link} to='#'>
-        <IoIosLogOut className='text-2xl hover:text-white' />
+        <IoIosLogOut className='text-2xl hover:text-gray-600' />
       </Typography>
     </ul>
   );
@@ -55,7 +55,7 @@ export function NavBar_User() {
   }, []);
 
   return (
-    <Navbar className='max-w-screen-7xl absolute top-0 left-0 px-6 bg-transparent rounded-none border-b-4 border-t-0 border-l-0 border-r-0 shadow-none backdrop-saturate-[-1] h-[10vh]'>
+    <Navbar className='max-w-screen-7xl  px-6 bg-transparent rounded-none border-b-4 border-t-0 border-l-0 border-r-0 shadow-none backdrop-saturate-[-1]'>
       <div className='flex items-center justify-between text-blue-gray-900'>
         <Typography
           as={Link}
