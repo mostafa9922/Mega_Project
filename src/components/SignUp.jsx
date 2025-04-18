@@ -50,8 +50,11 @@ export function SignUp() {
         password: e.target.password.value,
       };
       setIsSubmitting(true);
-      axios
-        .post("http://careerpath.runasp.net/auth/register", data)
+      axios({
+        method: "POST", // to send data
+        url: "http://careerpath.runasp.net/auth/register",
+        data: data, // data to be sent
+      })
         .then((response) => {
           if (response.data.status === 200) {
             navigate("/login");
