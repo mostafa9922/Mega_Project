@@ -4,6 +4,9 @@ import { EyeSlashIcon, EyeIcon } from "@heroicons/react/24/solid";
 import { Link } from "react-router-dom";
 import { FaApple } from "react-icons/fa";
 import { Alert } from "@material-tailwind/react";
+import { useNavigate } from "react-router-dom";
+
+import axios from "axios";
 
 export function SignUp() {
   const [passwordShown, setPasswordShown] = useState(false);
@@ -12,7 +15,13 @@ export function SignUp() {
   const [emptyName, setEmptyName] = useState(true);
   const [emptyEmail, setEmptyEmail] = useState(true);
   const [emptyPassword, setEmptyPassword] = useState(true);
+  const [errorPassword, setErrorPassword] = useState(true);
+  const [userExist, setUserExist] = useState(true);
+  const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [checked, setChecked] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -26,6 +35,37 @@ export function SignUp() {
     if (e.target.password.value !== "") {
       setEmptyPassword(false);
     }
+    if (e.target.password.value.length >= 8) {
+      setErrorPassword(false);
+    }
+    if (
+      e.target.Name.value !== "" &&
+      e.target.email.value !== "" &&
+      e.target.password.value !== "" &&
+      e.target.password.value.length >= 8
+    ) {
+      const data = {
+        name: e.target.Name.value,
+        email: e.target.email.value,
+        password: e.target.password.value,
+      };
+      setIsSubmitting(true);
+      axios
+        .post("http://careerpath.runasp.net/auth/register", data)
+        .then((response) => {
+          if (response.data.status === 200) {
+            navigate("/login");
+            setUserExist(false);
+          } else {
+            setUserExist(true);
+            setSubmitted(true);
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    }
+    setIsSubmitting(false);
   };
 
   return (
@@ -35,6 +75,13 @@ export function SignUp() {
           Create An Account
         </Typography>
         <form onSubmit={handleSubmit} className='w-full text-left'>
+          <Alert
+            color='red'
+            className={
+              userExist && checked && submitted ? "block mb-2 " : "hidden"
+            }>
+            User already exists!
+          </Alert>
           <Button
             variant='outlined'
             size='lg'
@@ -121,6 +168,15 @@ export function SignUp() {
               className={checked && emptyPassword ? "block mb-2" : "hidden"}>
               Enter your Password!
             </Alert>
+            <Alert
+              color='red'
+              className={
+                checked && errorPassword && !emptyPassword
+                  ? "block mb-2"
+                  : "hidden"
+              }>
+              Password must be at least 8 characters long!
+            </Alert>
             <Input
               size='lg'
               placeholder='********'
@@ -142,7 +198,11 @@ export function SignUp() {
             />
           </div>
 
-          <Button type='submit' size='lg' className='mt-6 bg-[#549acc] w-full'>
+          <Button
+            loading={isSubmitting}
+            type='submit'
+            size='lg'
+            className='mt-6 bg-[#549acc] w-full'>
             Create Account
           </Button>
 
