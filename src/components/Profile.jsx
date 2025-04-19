@@ -1,8 +1,7 @@
 import { Card, CardBody, Typography } from "@material-tailwind/react";
 import { LuFolderSearch, LuSearch, LuBookOpen } from "react-icons/lu";
-import { NavBar_User } from "./NavBar_User";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { NavMenu } from "./NavMenu";
 
 export const Profile = () => {
   const cardsData = [
@@ -28,18 +27,9 @@ export const Profile = () => {
 
   return (
     <div className='relative flex flex-col min-h-screen'>
-      <NavBar_User />
-
+      <NavMenu />
       {/* Background gradient layer */}
       <div className='absolute inset-0 h-full w-full bg-gradient-to-b from-[#E6F0FA] via-[#A3CFFA] to-[#4591C8] z-[-1] opacity-90' />
-
-      {/* Logo */}
-      <div className='absolute top-4 left-4 flex items-center z-10'>
-        <Link to='/' className='flex items-center'>
-          <img src='/image 14.png' alt='logo' className='w-14 h-8' />
-          <img src='/ookup.png' alt='OOkup text' className='w-14 h-8' />
-        </Link>
-      </div>
 
       {/* Main content */}
       <div className='flex flex-col items-center justify-center flex-grow gap-8 px-4 sm:px-6 lg:px-8 py-12'>

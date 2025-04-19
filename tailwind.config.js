@@ -10,10 +10,9 @@ module.exports = withMT({
   theme: {
     extend: {
       backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "hero-pattern": "url('/img/hero-pattern.svg')",
-        "footer-texture": "url('/img/footer-texture.png')",
-      },
+        'hero-pattern': "url('/img/hero-pattern.svg')",
+        'footer-texture': "url('/img/footer-texture.png')",
+      }
     },
   },
   plugins: [],

@@ -1,26 +1,55 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Typography, Input, Button } from "@material-tailwind/react";
 import { EyeSlashIcon, EyeIcon } from "@heroicons/react/24/solid";
 import { Alert } from "@material-tailwind/react";
+import axios from "axios";
 
 export function LogIn() {
   const [passwordShown, setPasswordShown] = useState(false);
   const togglePasswordVisiblity = () => setPasswordShown((cur) => !cur);
 
+  const navigate = useNavigate();
+
   const [emptyEmail, setEmptyEmail] = useState(true);
   const [emptyPassword, setEmptyPassword] = useState(true);
+  const [invalidData, setInvalidData] = useState(true);
   const [checked, setChecked] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setChecked(true);
+
     if (e.target.email.value !== "") {
       setEmptyEmail(false);
     }
     if (e.target.password.value !== "") {
       setEmptyPassword(false);
     }
-    setChecked(true);
+    if (e.target.password.value !== "" && e.target.email.value !== "") {
+      const data = {
+        email: e.target.email.value,
+        password: e.target.password.value,
+      };
+      setSubmitted(true);
+      axios({
+        method: "POST",
+        url: "https://careerpath.runasp.net/auth/login",
+        data: data,
+      })
+        .then((response) => {
+          if (response.data.status === 200) {
+            navigate("/profile");
+            setInvalidData(false);
+          } else {
+            setInvalidData(true);
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    }
   };
 
   return (
@@ -32,6 +61,13 @@ export function LogIn() {
         <Typography className='mb-8 text-gray-600 font-normal text-[18px] text-center'>
           Enter your email and password to sign in
         </Typography>
+        <Alert
+          color='red'
+          className={
+            checked && invalidData && submitted ? "block mb-2" : "hidden"
+          }>
+          Invalid Data
+        </Alert>
         <form onSubmit={handleSubmit} className='w-full text-left'>
           <div className='mb-6'>
             <label htmlFor='email' className='mb-2 block'>
