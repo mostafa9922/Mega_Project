@@ -52,7 +52,7 @@ export function SignUp() {
       setIsSubmitting(true);
       axios({
         method: "POST", // to send data
-        url: "http://careerpath.runasp.net/auth/register",
+        url: "https://careerpath.runasp.net/auth/register",
         data: data, // data to be sent
       })
         .then((response) => {
