@@ -12,6 +12,7 @@ import { ContactUs } from "./components/ContactUs";
 import { CheckEmail } from "./components/CheckEmail";
 import { SetNewPass } from "./components/SetNewPass";
 import { Confirmation } from "./components/Confirmation";
+import { UserProfile } from "./components/UserProfile";
 
 export default function App() {
   return (
@@ -29,6 +30,7 @@ export default function App() {
         <Route path='/confirmation' element={<Confirmation />} />
         <Route path='/forgotpassword' element={<ForgotPass />} />
         <Route path='/profile' element={<Profile />} />
+        <Route path='/userprofile' element={<UserProfile />} />
         <Route path='/*' element={<NotFound />} />
       </Routes>
     </div>
