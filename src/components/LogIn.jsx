@@ -1,54 +1,71 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Typography, Input, Button } from "@material-tailwind/react";
+import { Typography, Input, Button, Alert } from "@material-tailwind/react";
 import { EyeSlashIcon, EyeIcon } from "@heroicons/react/24/solid";
-import { Alert } from "@material-tailwind/react";
 import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 
-export function LogIn() {
+export function LogIn({ loggedIn, setLoggedIn }) {
+  const [formData, setFormData] = useState({ email: "", password: "" });
   const [passwordShown, setPasswordShown] = useState(false);
-  const togglePasswordVisiblity = () => setPasswordShown((cur) => !cur);
+  const [errors, setErrors] = useState({
+    email: "",
+    password: "",
+    general: "",
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const navigate = useNavigate();
 
-  const [emptyEmail, setEmptyEmail] = useState(true);
-  const [emptyPassword, setEmptyPassword] = useState(true);
-  const [invalidData, setInvalidData] = useState(true);
-  const [checked, setChecked] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
+  const togglePasswordVisibility = () => setPasswordShown((cur) => !cur);
 
-  const handleSubmit = (e) => {
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    // Clear field-specific errors on input change
+    setErrors((prev) => ({ ...prev, [name]: "" }));
+  };
+
+  const validateForm = () => {
+    const newErrors = { email: "", password: "", general: "" };
+    let isValid = true;
+
+    if (!formData.email) {
+      newErrors.email = "Email is required";
+      isValid = false;
+    }
+    if (!formData.password) {
+      newErrors.password = "Password is required";
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+    return isValid;
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setChecked(true);
+    setErrors({ email: "", password: "", general: "" });
 
-    if (e.target.email.value !== "") {
-      setEmptyEmail(false);
-    }
-    if (e.target.password.value !== "") {
-      setEmptyPassword(false);
-    }
-    if (e.target.password.value !== "" && e.target.email.value !== "") {
-      const data = {
-        email: e.target.email.value,
-        password: e.target.password.value,
-      };
-      setSubmitted(true);
-      axios({
-        method: "POST",
-        url: "https://careerpath.runasp.net/auth/login",
-        data: data,
-      })
-        .then((response) => {
-          if (response.data.status === 200) {
-            navigate("/profile");
-            setInvalidData(false);
-          } else {
-            setInvalidData(true);
-          }
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
+    if (!validateForm()) return;
+
+    setIsSubmitting(true);
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}/auth/login`,
+        formData
+      );
+      const token = response.data.token;
+      localStorage.setItem("token", token); // Store token securely
+      const decoded = jwtDecode(token);
+      navigate("/profile");
+      setLoggedIn(true);
+    } catch (error) {
+      const errorMessage =
+        error.response?.data?.error || "An unexpected error occurred";
+      setErrors((prev) => ({ ...prev, general: errorMessage }));
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -61,38 +78,36 @@ export function LogIn() {
         <Typography className='mb-8 text-gray-600 font-normal text-[18px] text-center'>
           Enter your email and password to sign in
         </Typography>
-        <Alert
-          color='red'
-          className={
-            checked && invalidData && submitted ? "block mb-2" : "hidden"
-          }>
-          Invalid Data
-        </Alert>
+        {errors.general && (
+          <Alert color='red' className='mb-4'>
+            {errors.general}
+          </Alert>
+        )}
         <form onSubmit={handleSubmit} className='w-full text-left'>
           <div className='mb-6'>
-            <label htmlFor='email' className='mb-2 block'>
+            <label htmlFor='email'>
               <Typography
                 variant='small'
                 className='mb-2 block font-medium text-gray-900'>
                 Your Email
               </Typography>
             </label>
-            <Alert
-              color='red'
-              className={checked && emptyEmail ? "block mb-2" : "hidden"}>
-              Enter your email!
-            </Alert>
+            {errors.email && (
+              <Alert color='red' className='mb-2'>
+                {errors.email}
+              </Alert>
+            )}
             <Input
               id='email'
               color='gray'
               size='lg'
               type='email'
               name='email'
+              value={formData.email}
+              onChange={handleChange}
               placeholder='name@mail.com'
               className='w-full placeholder:opacity-100 focus:border-t-primary border-t-blue-gray-200'
-              labelProps={{
-                className: "hidden",
-              }}
+              labelProps={{ className: "hidden" }}
             />
           </div>
           <div className='mb-6'>
@@ -103,37 +118,42 @@ export function LogIn() {
                 Password
               </Typography>
             </label>
-            <Alert
-              color='red'
-              className={checked && emptyPassword ? "block mb-2" : "hidden"}>
-              Enter your Password!
-            </Alert>
+            {errors.password && (
+              <Alert color='red' className='mb-2'>
+                {errors.password}
+              </Alert>
+            )}
             <Input
               size='lg'
               placeholder='********'
               name='password'
-              labelProps={{
-                className: "hidden",
-              }}
+              value={formData.password}
+              onChange={handleChange}
               className='w-full placeholder:opacity-100 focus:border-t-primary border-t-blue-gray-200'
               type={passwordShown ? "text" : "password"}
               icon={
-                <i onClick={togglePasswordVisiblity}>
-                  {passwordShown ? (
-                    <EyeIcon className='h-5 w-5' />
-                  ) : (
-                    <EyeSlashIcon className='h-5 w-5' />
-                  )}
-                </i>
+                passwordShown ? (
+                  <EyeIcon
+                    className='h-5 w-5 cursor-pointer'
+                    onClick={togglePasswordVisibility}
+                  />
+                ) : (
+                  <EyeSlashIcon
+                    className='h-5 w-5 cursor-pointer'
+                    onClick={togglePasswordVisibility}
+                  />
+                )
               }
+              labelProps={{ className: "hidden" }}
             />
           </div>
           <Button
             type='submit'
             color='gray'
             size='lg'
-            className='mt-6 bg-[#549acc] w-full'>
-            Log in
+            className='mt-6 bg-[#549acc] w-full'
+            disabled={isSubmitting}>
+            {isSubmitting ? "Logging in..." : "Log in"}
           </Button>
           <div className='mt-4 flex justify-end'>
             <Typography
@@ -158,8 +178,18 @@ export function LogIn() {
       </div>
       <div className='absolute top-4 left-4 flex items-center z-10'>
         <Link to='/' className='flex items-center'>
-          <img src='/image 14.png' alt='logo' className='w-14 h-8' />
-          <img src='/ookup.png' alt='' className='w-14 h-8' />
+          <img
+            src='/image 14.png'
+            alt='Logo'
+            className='w-14 h-8'
+            onError={(e) => (e.target.src = "/fallback-logo.png")} // Fallback image
+          />
+          <img
+            src='/ookup.png'
+            alt='Oookup'
+            className='w-14 h-8'
+            onError={(e) => (e.target.src = "/fallback-ookup.png")}
+          />
         </Link>
       </div>
     </section>

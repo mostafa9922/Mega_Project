@@ -116,7 +116,7 @@ export const UserProfile = () => {
         </Dialog>
 
         {/* Profile Info */}
-        <div className=' sm:ml-28 mb-10 flex justify-between items-center'>
+        <div className='sm:ml-28 mb-10 flex justify-between items-center'>
           <div>
             <h2 className='text-2xl font-bold text-gray-900 md:text-3xl'>
               {PROFILE_INFO.name}

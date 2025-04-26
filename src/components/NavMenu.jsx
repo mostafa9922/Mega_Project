@@ -4,12 +4,12 @@ import {
   Typography,
   IconButton,
   Button,
-  Avatar,
 } from "@material-tailwind/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { IoSettingsOutline } from "react-icons/io5";
+import { UserAvatar } from "./UserAvatar";
 
 function NavList() {
   return (
@@ -76,11 +76,10 @@ function NavList() {
           Profile
         </Link>
       </Typography>
-      <Avatar
-        src='https://docs.material-tailwind.com/img/face-2.jpg'
-        alt='avatar'
-        variant='rounded'
-      />
+      <div className='w-[15%]'>
+        <UserAvatar />
+      </div>
+
       <Typography as={Link} to='#'>
         <IoSettingsOutline className='text-2xl hover:text-white' />
       </Typography>

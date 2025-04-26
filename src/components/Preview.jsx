@@ -39,11 +39,11 @@ const features2 = [
   },
 ];
 
-export const Preview = () => {
+export const Preview = ({ loggedIn, setLoggedIn }) => {
   return (
     <div className='flex flex-col min-h-screen'>
       <div className='bg-[#EFF8F0] flex-grow w-full'>
-        <NavBar_perview />
+        <NavBar_perview loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
         <section className='relative flex flex-col items-center justify-center pt-12'>
           <div className='container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-16 py-12'>
             {/* Left Text Content */}

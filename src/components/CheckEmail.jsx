@@ -7,6 +7,7 @@ export function CheckEmail() {
   const [code, setCode] = useState(["", "", "", "", ""]);
   const [error, setError] = useState(false);
   const inputRefs = useRef([]);
+  
   const location = useLocation();
   const email = location.state?.email;
 

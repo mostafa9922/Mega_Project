@@ -8,9 +8,11 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@material-tailwind/react";
+import { IoSettingsOutline } from "react-icons/io5";
+import { UserAvatar } from "./UserAvatar";
 
-function NavList({ isMobile = false }) {
-  return (
+function NavList({ isMobile = false, loggedIn, setLoggedIn }) {
+  return !loggedIn ? (
     <ul
       className={`my-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6 ${
         isMobile ? "bg-white p-4 rounded-lg" : ""
@@ -53,10 +55,82 @@ function NavList({ isMobile = false }) {
         </Button>
       </Link>
     </ul>
+  ) : (
+    <ul className='my-2 flex flex-col lg:mb-0 lg:mt-0 lg:flex-row lg:items-center gap-3 lg:gap-10 '>
+      <div className='w-full max-w-sm min-w-[200px]'>
+        <div className='flex items-center relative border border-slate-200 rounded-md shadow-sm focus-within:border-slate-400 hover:border-slate-300'>
+          <input
+            className='flex-1 bg-transparent placeholder:text-slate-400 text-slate-700 text-sm pl-3 pr-2 py-2 focus:outline-none'
+            placeholder='Job Title , KeyWords or Company Name'
+          />
+          <Button
+            className='rounded-l-none h-full px-3 flex items-center gap-1 text-sm'
+            type='button'
+            size='sm'>
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              viewBox='0 0 24 24'
+              fill='currentColor'
+              className='w-4 h-4'>
+              <path
+                fillRule='evenodd'
+                d='M10.5 3.75a6.75 6.75 0 1 0 0 13.5 6.75 6.75 0 0 0 0-13.5ZM2.25 10.5a8.25 8.25 0 1 1 14.59 5.28l4.69 4.69a.75.75 0 1 1-1.06 1.06l-4.69-4.69A8.25 8.25 0 0 1 2.25 10.5Z'
+                clipRule='evenodd'
+              />
+            </svg>
+            Search
+          </Button>
+        </div>
+      </div>
+
+      <Typography
+        as='li'
+        variant='small'
+        color='blue-gray'
+        className='p-1 font-medium'>
+        <Link to='#' className='flex items-center text-white '>
+          Home
+        </Link>
+      </Typography>
+      <Typography
+        as='li'
+        variant='small'
+        color='blue-gray'
+        className='p-1 font-medium'>
+        <Link to='/interview' className='flex items-center text-white '>
+          InterView
+        </Link>
+      </Typography>
+      <Typography
+        as='li'
+        variant='small'
+        color='blue-gray'
+        className='p-1 font-medium'>
+        <Link to='#' className='text-white '>
+          Job Track
+        </Link>
+      </Typography>
+      <Typography
+        as='li'
+        variant='small'
+        color='blue-gray'
+        className='p-1 font-medium'>
+        <Link to='#' className='flex items-center text-white'>
+          Profile
+        </Link>
+      </Typography>
+      <div className='w-[15%]'>
+        <UserAvatar />
+      </div>
+
+      <Typography as={Link} to='#'>
+        <IoSettingsOutline className='text-2xl hover:text-white' />
+      </Typography>
+    </ul>
   );
 }
 
-export function NavBar_perview() {
+export function NavBar_perview({ loggedIn, setLoggedIn }) {
   const [openNav, setOpenNav] = useState(false);
 
   const handleWindowResize = () =>
@@ -85,7 +159,11 @@ export function NavBar_perview() {
           </div>
         </Typography>
         <div className='hidden lg:block'>
-          <NavList isMobile={false} />
+          <NavList
+            isMobile={false}
+            loggedIn={loggedIn}
+            setLoggedIn={setLoggedIn}
+          />
         </div>
         <IconButton
           variant='text'
@@ -100,7 +178,11 @@ export function NavBar_perview() {
         </IconButton>
       </div>
       <Collapse open={openNav}>
-        <NavList isMobile={true} />
+        <NavList
+          isMobile={true}
+          loggedIn={loggedIn}
+          setLoggedIn={setLoggedIn}
+        />
       </Collapse>
     </Navbar>
   );

@@ -13,13 +13,21 @@ import { CheckEmail } from "./components/CheckEmail";
 import { SetNewPass } from "./components/SetNewPass";
 import { Confirmation } from "./components/Confirmation";
 import { UserProfile } from "./components/UserProfile";
+import { useState } from "react";
 
 export default function App() {
+  const [loggedIn, setLoggedIn] = useState(false);
   return (
     <div>
       <Routes>
-        <Route path='/' element={<Preview />} />
-        <Route path='/login' element={<LogIn />} />
+        <Route
+          path='/'
+          element={<Preview loggedIn={loggedIn} setLoggedIn={setLoggedIn} />}
+        />
+        <Route
+          path='/login'
+          element={<LogIn loggedIn={loggedIn} setLoggedIn={setLoggedIn} />}
+        />
         <Route path='/signup' element={<SignUp />} />
         <Route path='/aboutus' element={<AboutUs />} />
         <Route path='/jobs' element={<Jobs />} />

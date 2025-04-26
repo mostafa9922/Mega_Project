@@ -1,74 +1,99 @@
 import { useState } from "react";
-import { Typography, Input, Button } from "@material-tailwind/react";
+import { Typography, Input, Button, Alert } from "@material-tailwind/react";
 import { EyeSlashIcon, EyeIcon } from "@heroicons/react/24/solid";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaApple } from "react-icons/fa";
-import { Alert } from "@material-tailwind/react";
-import { useNavigate } from "react-router-dom";
-
 import axios from "axios";
 
 export function SignUp() {
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
   const [passwordShown, setPasswordShown] = useState(false);
-  const togglePasswordVisiblity = () => setPasswordShown((cur) => !cur);
-
-  const [emptyName, setEmptyName] = useState(true);
-  const [emptyEmail, setEmptyEmail] = useState(true);
-  const [emptyPassword, setEmptyPassword] = useState(true);
-  const [errorPassword, setErrorPassword] = useState(true);
-  const [userExist, setUserExist] = useState(true);
-  const [submitted, setSubmitted] = useState(false);
+  const [errors, setErrors] = useState({
+    username: "",
+    email: "",
+    password: "",
+    general: "",
+  });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [checked, setChecked] = useState(false);
 
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setChecked(true);
-    if (e.target.Name.value !== "") {
-      setEmptyName(false);
+  const togglePasswordVisibility = () => setPasswordShown((cur) => !cur);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    setErrors((prev) => ({ ...prev, [name]: "", general: "" }));
+  };
+
+  const validateForm = () => {
+    const newErrors = { username: "", email: "", password: "", general: "" };
+    let isValid = true;
+
+    if (!formData.username) {
+      newErrors.username = "Name is required";
+      isValid = false;
     }
-    if (e.target.email.value !== "") {
-      setEmptyEmail(false);
+    if (!formData.email) {
+      newErrors.email = "Email is required";
+      isValid = false;
     }
-    if (e.target.password.value !== "") {
-      setEmptyPassword(false);
-    }
-    if (e.target.password.value.length >= 8) {
-      setErrorPassword(false);
-    }
-    if (
-      e.target.Name.value !== "" &&
-      e.target.email.value !== "" &&
-      e.target.password.value !== "" &&
-      e.target.password.value.length >= 8
+    if (!formData.password) {
+      newErrors.password = "Password is required";
+      isValid = false;
+    } else if (formData.password.length < 8) {
+      newErrors.password = "Password must be at least 8 characters long";
+      isValid = false;
+    } else if (
+      !/[A-Z]/.test(formData.password) ||
+      !/[!@#$%^&*]/.test(formData.password)
     ) {
-      const data = {
-        name: e.target.Name.value,
-        email: e.target.email.value,
-        password: e.target.password.value,
-      };
-      setIsSubmitting(true);
-      axios({
-        method: "POST", // to send data
-        url: "https://careerpath.runasp.net/auth/register",
-        data: data, // data to be sent
-      })
-        .then((response) => {
-          if (response.data.status === 200) {
-            navigate("/login");
-            setUserExist(false);
-          } else {
-            setUserExist(true);
-            setSubmitted(true);
-          }
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
+      newErrors.password =
+        "Password must include an uppercase letter and a special character";
+      isValid = false;
     }
-    setIsSubmitting(false);
+
+    setErrors(newErrors);
+    return isValid;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setErrors({ username: "", email: "", password: "", general: "" });
+
+    if (!validateForm()) return;
+
+    setIsSubmitting(true);
+    try {
+      await axios.post(
+        `${process.env.REACT_APP_API_URL}/auth/register`,
+        formData
+      );
+      setFormData({ username: "", email: "", password: "" }); // Clear form data on success
+      navigate("/login");
+    } catch (error) {
+      const errorMessage =
+        error.response?.data?.error ||
+        "Failed to create account. Please try again.";
+      setErrors((prev) => ({ ...prev, general: errorMessage }));
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  // Placeholder for social login (implement or remove)
+  const handleGoogleLogin = () => {
+    console.log("Google login clicked");
+    // Implement Google OAuth flow
+  };
+
+  const handleAppleLogin = () => {
+    console.log("Apple login clicked");
+    // Implement Apple Sign-In flow
   };
 
   return (
@@ -77,57 +102,60 @@ export function SignUp() {
         <Typography variant='h3' className='text-[#2775AD] mb-4 text-center'>
           Create An Account
         </Typography>
-        <form onSubmit={handleSubmit} className='w-full text-left'>
-          <Alert
-            color='red'
-            className={
-              userExist && checked && submitted ? "block mb-2 " : "hidden"
-            }>
-            User already exists!
+        {errors.general && (
+          <Alert color='red' className='mb-4'>
+            {errors.general}
           </Alert>
+        )}
+        <form onSubmit={handleSubmit} className='w-full text-left'>
           <Button
             variant='outlined'
             size='lg'
-            className='mt-6 flex h-12 items-center justify-center gap-2 w-full'>
+            className='mt-6 flex h-12 items-center justify-center gap-2 w-full'
+            onClick={handleGoogleLogin}
+            disabled={isSubmitting}>
             <img
               src={`https://www.material-tailwind.com/logos/logo-google.png`}
-              alt='google'
+              alt='Google logo'
               className='h-6 w-6'
+              onError={(e) => (e.target.src = "/fallback-google.png")}
             />
             Continue with Google
           </Button>
           <Button
             variant='outlined'
             size='lg'
-            className='my-4 flex h-12 items-center justify-center gap-2 w-full'>
+            className='my-4 flex h-12 items-center justify-center gap-2 w-full'
+            onClick={handleAppleLogin}
+            disabled={isSubmitting}>
             <FaApple className='text-2xl' />
             Continue with Apple
           </Button>
 
           <div className='mb-6'>
-            <label htmlFor='Name'>
+            <label htmlFor='username'>
               <Typography
                 variant='small'
                 className='mb-2 block font-medium text-gray-900'>
                 Name
               </Typography>
             </label>
-            <Alert
-              color='red'
-              className={checked && emptyName ? "block mb-2" : "hidden"}>
-              Enter your name!
-            </Alert>
+            {errors.username && (
+              <Alert color='red' className='mb-2'>
+                {errors.username}
+              </Alert>
+            )}
             <Input
-              id='Name'
+              id='username'
               color='gray'
               size='lg'
               type='text'
-              name='Name'
+              name='username'
+              value={formData.username}
+              onChange={handleChange}
               placeholder='John Doe'
               className='w-full placeholder:opacity-100 focus:border-t-primary border-t-blue-gray-200'
-              labelProps={{
-                className: "hidden",
-              }}
+              labelProps={{ className: "hidden" }}
             />
           </div>
 
@@ -139,22 +167,22 @@ export function SignUp() {
                 Your Email
               </Typography>
             </label>
-            <Alert
-              color='red'
-              className={checked && emptyEmail ? "block mb-2" : "hidden"}>
-              Enter your Email!
-            </Alert>
+            {errors.email && (
+              <Alert color='red' className='mb-2'>
+                {errors.email}
+              </Alert>
+            )}
             <Input
               id='email'
               color='gray'
               size='lg'
               type='email'
               name='email'
+              value={formData.email}
+              onChange={handleChange}
               placeholder='name@mail.com'
               className='w-full placeholder:opacity-100 focus:border-t-primary border-t-blue-gray-200'
-              labelProps={{
-                className: "hidden",
-              }}
+              labelProps={{ className: "hidden" }}
             />
           </div>
 
@@ -166,47 +194,42 @@ export function SignUp() {
                 Password
               </Typography>
             </label>
-            <Alert
-              color='red'
-              className={checked && emptyPassword ? "block mb-2" : "hidden"}>
-              Enter your Password!
-            </Alert>
-            <Alert
-              color='red'
-              className={
-                checked && errorPassword && !emptyPassword
-                  ? "block mb-2"
-                  : "hidden"
-              }>
-              Password must be at least 8 characters long!
-            </Alert>
+            {errors.password && (
+              <Alert color='red' className='mb-2'>
+                {errors.password}
+              </Alert>
+            )}
             <Input
               size='lg'
               placeholder='********'
               name='password'
-              labelProps={{
-                className: "hidden",
-              }}
+              value={formData.password}
+              onChange={handleChange}
               className='w-full placeholder:opacity-100 focus:border-t-primary border-t-blue-gray-200'
               type={passwordShown ? "text" : "password"}
               icon={
-                <i onClick={togglePasswordVisiblity}>
-                  {passwordShown ? (
-                    <EyeIcon className='h-5 w-5' />
-                  ) : (
-                    <EyeSlashIcon className='h-5 w-5' />
-                  )}
-                </i>
+                passwordShown ? (
+                  <EyeIcon
+                    className='h-5 w-5 cursor-pointer'
+                    onClick={togglePasswordVisibility}
+                  />
+                ) : (
+                  <EyeSlashIcon
+                    className='h-5 w-5 cursor-pointer'
+                    onClick={togglePasswordVisibility}
+                  />
+                )
               }
+              labelProps={{ className: "hidden" }}
             />
           </div>
 
           <Button
-            loading={isSubmitting}
             type='submit'
             size='lg'
-            className='mt-6 bg-[#549acc] w-full'>
-            Create Account
+            className='mt-6 bg-[#549acc] w-full'
+            disabled={isSubmitting}>
+            {isSubmitting ? "Creating Account..." : "Create Account"}
           </Button>
 
           <Typography
@@ -223,8 +246,18 @@ export function SignUp() {
 
       <div className='absolute top-4 left-4 flex items-center z-10'>
         <Link to='/' className='flex items-center'>
-          <img src='/image 14.png' alt='logo' className='w-14 h-8' />
-          <img src='/ookup.png' alt='' className='w-14 h-8' />
+          <img
+            src='/image 14.png'
+            alt='Logo'
+            className='w-14 h-8'
+            onError={(e) => (e.target.src = "/fallback-logo.png")}
+          />
+          <img
+            src='/ookup.png'
+            alt='Oookup'
+            className='w-14 h-8'
+            onError={(e) => (e.target.src = "/fallback-ookup.png")}
+          />
         </Link>
       </div>
     </section>
