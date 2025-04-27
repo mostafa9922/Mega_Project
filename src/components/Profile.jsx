@@ -3,7 +3,7 @@ import { LuFolderSearch, LuSearch, LuBookOpen } from "react-icons/lu";
 import { motion } from "framer-motion";
 import { NavMenu } from "./NavMenu";
 
-export const Profile = () => {
+export const Profile = ({ loggedIn, setLoggedIn }) => {
   const cardsData = [
     {
       title: "Find Your Dream Job",
@@ -27,7 +27,7 @@ export const Profile = () => {
 
   return (
     <div className='relative flex flex-col min-h-screen'>
-      <NavMenu />
+      <NavMenu loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
       {/* Background gradient layer */}
       <div className='absolute inset-0 h-full w-full bg-gradient-to-b from-[#E6F0FA] via-[#A3CFFA] to-[#4591C8] z-[-1] opacity-90' />
 

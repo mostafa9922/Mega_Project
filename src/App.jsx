@@ -37,7 +37,10 @@ export default function App() {
         <Route path='/setnewpassword' element={<SetNewPass />} />
         <Route path='/confirmation' element={<Confirmation />} />
         <Route path='/forgotpassword' element={<ForgotPass />} />
-        <Route path='/profile' element={<Profile />} />
+        <Route
+          path='/profile'
+          element={<Profile loggedIn={loggedIn} setLoggedIn={setLoggedIn} />}
+        />
         <Route path='/userprofile' element={<UserProfile />} />
         <Route path='/*' element={<NotFound />} />
       </Routes>

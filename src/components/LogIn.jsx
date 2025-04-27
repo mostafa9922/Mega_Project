@@ -22,7 +22,6 @@ export function LogIn({ loggedIn, setLoggedIn }) {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-    // Clear field-specific errors on input change
     setErrors((prev) => ({ ...prev, [name]: "" }));
   };
 
@@ -56,7 +55,7 @@ export function LogIn({ loggedIn, setLoggedIn }) {
         formData
       );
       const token = response.data.token;
-      localStorage.setItem("token", token); // Store token securely
+      localStorage.setItem("token", token); 
       const decoded = jwtDecode(token);
       navigate("/profile");
       setLoggedIn(true);

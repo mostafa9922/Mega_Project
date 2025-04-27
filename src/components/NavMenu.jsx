@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 import { IoSettingsOutline } from "react-icons/io5";
 import { UserAvatar } from "./UserAvatar";
 
-function NavList() {
+function NavList({ loggedIn, setLoggedIn }) {
   return (
     <ul className='my-2 flex flex-col lg:mb-0 lg:mt-0 lg:flex-row lg:items-center gap-3 lg:gap-10 '>
       <div className='w-full max-w-sm min-w-[200px]'>
@@ -77,7 +77,7 @@ function NavList() {
         </Link>
       </Typography>
       <div className='w-[15%]'>
-        <UserAvatar />
+        <UserAvatar loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
       </div>
 
       <Typography as={Link} to='#'>
@@ -87,7 +87,7 @@ function NavList() {
   );
 }
 
-export function NavMenu() {
+export function NavMenu({ loggedIn, setLoggedIn }) {
   const [openNav, setOpenNav] = useState(false);
 
   const handleWindowResize = () =>
@@ -109,7 +109,7 @@ export function NavMenu() {
           <img src='/ookup.png' alt='' className='w-14 h-8' />
         </Link>
         <div className='hidden lg:flex lg:flex-col lg:items-center'>
-          <NavList />
+          <NavList loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
         </div>
         <IconButton
           variant='text'
@@ -124,7 +124,7 @@ export function NavMenu() {
         </IconButton>
       </div>
       <Collapse open={openNav}>
-        <NavList />
+        <NavList loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
       </Collapse>
     </Navbar>
   );
