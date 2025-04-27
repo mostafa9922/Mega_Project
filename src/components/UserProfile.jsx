@@ -10,8 +10,11 @@ import {
   Input,
 } from "@material-tailwind/react";
 import { CiClock2 } from "react-icons/ci";
+import { jwtDecode } from "jwt-decode";
 
 export const UserProfile = () => {
+  const token = localStorage.getItem("token");
+  const user = jwtDecode(token);
   const [openCoverModal, setOpenCoverModal] = useState(false);
   const [coverImage, setCoverImage] = useState(
     "https://images.unsplash.com/photo-1682407186023-12c70a4a35e0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2832&q=80"

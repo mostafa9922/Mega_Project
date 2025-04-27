@@ -1,23 +1,71 @@
 import { useState } from "react";
-import { Typography, Input, Button } from "@material-tailwind/react";
-import { Alert } from "@material-tailwind/react";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-export function ForgotPass() {
-  const [emptyEmail, setEmptyEmail] = useState(true);
-  const [checked, setChecked] = useState(false);
+import { Typography, Input, Button, Alert } from "@material-tailwind/react";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+
+export function ForgotPass({ setResetPassStatus }) {
+  const [formData, setFormData] = useState({
+    email: "",
+  });
+  const [errors, setErrors] = useState({
+    email: "",
+    general: "",
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const navigate = useNavigate();
-  const handleSubmit = (e) => {
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(() => ({ [name]: value }));
+    setErrors(() => ({ [name]: "", general: "" }));
+  };
+
+  const validateForm = () => {
+    const newErrors = { email: "", general: "" };
+    let isValid = true;
+
+    if (!formData.email) {
+      newErrors.email = "Email is required";
+      isValid = false;
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = "Please enter a valid email address";
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+    return isValid;
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (e.target.email.value !== "") {
-      setEmptyEmail(false);
-      // Simulate an API call
-      navigate("/check-email", {
-        state: { email: e.target.email.value },
-      });
+    setErrors({ email: "", general: "" });
+
+    if (!validateForm()) {
+      setIsSubmitting(false);
       return;
     }
-    setChecked(true);
+
+    setIsSubmitting(true);
+
+    try {
+      await axios.post(
+        `${process.env.REACT_APP_API_URL}/auth/forgot-password`,
+        { email: formData.email }
+      );
+      setFormData({ email: "" });
+      navigate("/check-email", {
+        state: { email: formData.email },
+      });
+      setResetPassStatus(true);
+    } catch (error) {
+      const errorMessage =
+        error.response?.data?.error ||
+        "Failed to send reset link. Please try again.";
+      setErrors((prev) => ({ ...prev, general: errorMessage }));
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -38,30 +86,38 @@ export function ForgotPass() {
                 Your Email
               </Typography>
             </label>
-            <Alert
-              color='red'
-              className={checked && emptyEmail ? "block mb-2" : "hidden"}>
-              Enter your email!
-            </Alert>
+            {errors.email && (
+              <Alert color='red' className='mb-2'>
+                {errors.email}
+              </Alert>
+            )}
+            {errors.general && (
+              <Alert color='red' className='mb-2'>
+                {errors.general}
+              </Alert>
+            )}
             <Input
               id='email'
               color='gray'
               size='lg'
-              type='email'
               name='email'
+              onChange={handleChange}
+              value={formData.email}
               placeholder='name@mail.com'
               className='w-full placeholder:opacity-100 focus:border-t-primary border-t-blue-gray-200'
               labelProps={{
                 className: "hidden",
               }}
+              disabled={isSubmitting}
             />
           </div>
           <Button
             type='submit'
             color='gray'
             size='lg'
-            className='mt-6 bg-[#549acc] w-full'>
-            Reset Password
+            className='mt-6 bg-[#549acc] w-full'
+            disabled={isSubmitting}>
+            {isSubmitting ? "Submitting..." : "Reset Password"}
           </Button>
         </form>
       </div>

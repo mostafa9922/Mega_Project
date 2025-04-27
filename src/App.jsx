@@ -17,6 +17,8 @@ import { useState } from "react";
 
 export default function App() {
   const [loggedIn, setLoggedIn] = useState(false);
+  const [resetPassStatus, setResetPassStatus] = useState(false);
+
   return (
     <div>
       <Routes>
@@ -24,24 +26,43 @@ export default function App() {
           path='/'
           element={<Preview loggedIn={loggedIn} setLoggedIn={setLoggedIn} />}
         />
-        <Route
-          path='/login'
-          element={<LogIn loggedIn={loggedIn} setLoggedIn={setLoggedIn} />}
-        />
-        <Route path='/signup' element={<SignUp />} />
+        {!loggedIn && (
+          <>
+            <Route
+              path='/login'
+              element={<LogIn loggedIn={loggedIn} setLoggedIn={setLoggedIn} />}
+            />
+            <Route path='/signup' element={<SignUp />} />
+          </>
+        )}
+
         <Route path='/aboutus' element={<AboutUs />} />
         <Route path='/jobs' element={<Jobs />} />
-        <Route path='/interview' element={<InterView />} />
         <Route path='/contact-us' element={<ContactUs />} />
-        <Route path='/check-email' element={<CheckEmail />} />
-        <Route path='/setnewpassword' element={<SetNewPass />} />
-        <Route path='/confirmation' element={<Confirmation />} />
-        <Route path='/forgotpassword' element={<ForgotPass />} />
         <Route
-          path='/profile'
-          element={<Profile loggedIn={loggedIn} setLoggedIn={setLoggedIn} />}
+          path='/forgotpassword'
+          element={<ForgotPass setResetPassStatus={setResetPassStatus} />}
         />
-        <Route path='/userprofile' element={<UserProfile />} />
+        {resetPassStatus && (
+          <>
+            <Route path='/check-email' element={<CheckEmail />} />
+            <Route path='/setnewpassword' element={<SetNewPass />} />
+            <Route path='/confirmation' element={<Confirmation />} />
+          </>
+        )}
+
+        {loggedIn && (
+          <>
+            <Route path='/userprofile' element={<UserProfile />} />
+            <Route
+              path='/profile'
+              element={
+                <Profile loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
+              }
+            />
+            <Route path='/interview' element={<InterView />} />
+          </>
+        )}
         <Route path='/*' element={<NotFound />} />
       </Routes>
     </div>

@@ -3,7 +3,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { Typography, Input, Button, Alert } from "@material-tailwind/react";
 import { EyeSlashIcon, EyeIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
-import { jwtDecode } from "jwt-decode";
 
 export function LogIn({ loggedIn, setLoggedIn }) {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -56,7 +55,6 @@ export function LogIn({ loggedIn, setLoggedIn }) {
       );
       const token = response.data.token;
       localStorage.setItem("token", token); 
-      const decoded = jwtDecode(token);
       navigate("/profile");
       setLoggedIn(true);
     } catch (error) {
