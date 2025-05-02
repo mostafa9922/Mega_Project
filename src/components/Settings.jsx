@@ -12,6 +12,8 @@ import { Link } from "react-router-dom";
 import { ImageUpload } from "./ImageUpload";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import { jwtDecode } from "jwt-decode";
+import axios from "axios";
 
 function DefaultSidebar({ setLoggedIn }) {
   const handleSignOut = () => {
@@ -95,6 +97,8 @@ export const Settings = ({ loggedIn, setLoggedIn }) => {
     gender: "",
   });
   const [isLoading, setIsLoading] = useState(false);
+  const token = localStorage.getItem("token");
+  const decodedToken = token ? jwtDecode(token) : null;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -140,7 +144,16 @@ export const Settings = ({ loggedIn, setLoggedIn }) => {
 
     setIsSubmitting(true);
     try {
-      const response = await axios.post(`http://localhost:5000/`, formData);
+      const response = await axios.get(
+        `http://localhost:5000/api/profiles/${decodedToken.nameid}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log(response.data);
+
       toast.success("Profile updated successfully!", {
         position: "top-right",
         autoClose: 3000,

@@ -1,7 +1,9 @@
 import React from "react";
 import { NavMenu } from "./NavMenu";
+import { jwtDecode } from "jwt-decode";
 
 export const Dashboard = ({ loggedIn, setLoggedIn }) => {
+
   return (
     <div className='min-h-screen bg-gray-50'>
       <NavMenu loggedIn={loggedIn} setLoggedIn={setLoggedIn} />

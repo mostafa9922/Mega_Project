@@ -4,7 +4,7 @@ import { Typography, Input, Button, Alert } from "@material-tailwind/react";
 import { EyeSlashIcon, EyeIcon } from "@heroicons/react/24/solid";
 import axios from "axios";
 
-export function LogIn({ loggedIn, setLoggedIn }) {
+export function LogIn({ setLoggedIn }) {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [passwordShown, setPasswordShown] = useState(false);
   const [errors, setErrors] = useState({

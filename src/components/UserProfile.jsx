@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NavMenu } from "./NavMenu";
 import {
   Avatar,
@@ -35,6 +35,26 @@ export const UserProfile = ({ loggedIn, setLoggedIn }) => {
       "Embedded Systems (ATmega32, STM32)",
     ],
   };
+
+  // useEffect(() => {
+  //   const fetchUserProfile = async () => {
+  //     try {
+  //       const response = await axios.get(
+  //         `http://localhost:5000/user/${user.nameid}`,
+  //         {
+  //           headers: {
+  //             Authorization: `Bearer ${token}`,
+  //           },
+  //         }
+  //       );
+  //       const userData = response.data;
+  //       console.log(userData);
+  //     } catch (error) {
+  //       console.error("Error fetching user profile:", error);
+  //     }
+  //   };
+  //   fetchUserProfile();
+  // }, []);
 
   // Modal handlers
   const handleOpenCoverModal = () => setOpenCoverModal(true);

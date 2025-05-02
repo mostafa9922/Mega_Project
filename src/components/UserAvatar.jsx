@@ -17,24 +17,21 @@ import {
 } from "@heroicons/react/24/solid";
 import { Link, useNavigate } from "react-router-dom";
 
-// Profile menu items
 const profileMenuItems = [
   { label: "My Profile", icon: UserCircleIcon, to: "/userprofile" },
   { label: "Settings", icon: Cog6ToothIcon, to: "/settings" }, // Add actual route
   { label: "Inbox", icon: InboxArrowDownIcon, to: "#" }, // Add actual route
   { label: "Help", icon: LifebuoyIcon, to: "#" }, // Add actual route
-  { label: "Sign Out", icon: PowerIcon, to: "#" }, // Use # since navigation is handled in onClick
+  { label: "Sign Out", icon: PowerIcon, to: "/login" }, 
 ];
 
-export function UserAvatar({ loggedIn, setLoggedIn }) {
+export function UserAvatar({ setLoggedIn }) {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const closeMenu = () => setIsMenuOpen(false);
-  const navigate = useNavigate();
 
   const handleSignOut = () => {
     localStorage.removeItem("token");
     setLoggedIn(false);
-    navigate("/login");
   };
   return (
     <Menu open={isMenuOpen} handler={setIsMenuOpen} placement='bottom-end'>
@@ -50,7 +47,7 @@ export function UserAvatar({ loggedIn, setLoggedIn }) {
             alt={"User avatar"}
             withBorder={true}
             color='blue-gray'
-            className='w-10 h-10' // Replace max-w-[200%] with fixed size
+            className='w-10 h-10'
             src={"https://docs.material-tailwind.com/img/face-2.jpg"}
           />
         </Button>
@@ -60,14 +57,16 @@ export function UserAvatar({ loggedIn, setLoggedIn }) {
           const isLastItem = key === profileMenuItems.length - 1;
           return (
             <MenuItem
-              onClick={isLastItem ? handleSignOut : undefined}
               key={key}
               className={`flex items-center gap-2 rounded ${
                 isLastItem
                   ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"
                   : ""
               }`}>
-              <Link to={to} className='flex items-center gap-2 w-full'>
+              <Link
+                to={to}
+                className='flex items-center gap-2 w-full'
+                onClick={isLastItem && handleSignOut}>
                 {React.createElement(icon, {
                   className: `h-4 w-4 ${isLastItem ? "text-red-500" : ""}`,
                   strokeWidth: 2,
