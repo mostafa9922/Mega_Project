@@ -88,7 +88,7 @@ function NavList({ isMobile = false, loggedIn, setLoggedIn }) {
         variant='small'
         color='blue-gray'
         className='p-1 font-medium'>
-        <Link to='#' className='flex items-center text-white '>
+        <Link to='#' className='flex items-center text-[#183F5B] '>
           Home
         </Link>
       </Typography>
@@ -97,7 +97,7 @@ function NavList({ isMobile = false, loggedIn, setLoggedIn }) {
         variant='small'
         color='blue-gray'
         className='p-1 font-medium'>
-        <Link to='/interview' className='flex items-center text-white '>
+        <Link to='/interview' className='flex items-center text-[#183F5B] '>
           InterView
         </Link>
       </Typography>
@@ -106,7 +106,7 @@ function NavList({ isMobile = false, loggedIn, setLoggedIn }) {
         variant='small'
         color='blue-gray'
         className='p-1 font-medium'>
-        <Link to='#' className='text-white '>
+        <Link to='#' className='text-[#183F5B] '>
           Job Track
         </Link>
       </Typography>
@@ -115,7 +115,7 @@ function NavList({ isMobile = false, loggedIn, setLoggedIn }) {
         variant='small'
         color='blue-gray'
         className='p-1 font-medium'>
-        <Link to='#' className='flex items-center text-white'>
+        <Link to='#' className='flex items-center text-[#183F5B]'>
           Profile
         </Link>
       </Typography>

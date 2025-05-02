@@ -13,11 +13,18 @@ import { CheckEmail } from "./components/CheckEmail";
 import { SetNewPass } from "./components/SetNewPass";
 import { Confirmation } from "./components/Confirmation";
 import { UserProfile } from "./components/UserProfile";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [resetPassStatus, setResetPassStatus] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setLoggedIn(true);
+    }
+  }, []);
 
   return (
     <div>

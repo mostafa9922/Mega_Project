@@ -45,7 +45,7 @@ function NavList({ loggedIn, setLoggedIn }) {
         variant='small'
         color='blue-gray'
         className='p-1 font-medium'>
-        <Link to='#' className='flex items-center text-white '>
+        <Link to='/profile' className='flex items-center text-white '>
           Home
         </Link>
       </Typography>
@@ -72,8 +72,8 @@ function NavList({ loggedIn, setLoggedIn }) {
         variant='small'
         color='blue-gray'
         className='p-1 font-medium'>
-        <Link to='#' className='flex items-center text-white'>
-          Profile
+        <Link to='/jobs' className='flex items-center text-white'>
+          jobs
         </Link>
       </Typography>
       <div className='w-[15%]'>

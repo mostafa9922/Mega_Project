@@ -23,7 +23,7 @@ const profileMenuItems = [
   { label: "Edit Profile", icon: Cog6ToothIcon, to: "#" }, // Add actual route
   { label: "Inbox", icon: InboxArrowDownIcon, to: "#" }, // Add actual route
   { label: "Help", icon: LifebuoyIcon, to: "#" }, // Add actual route
-  { label: "Sign Out", icon: PowerIcon, to: "/" }, // Use # since navigation is handled in onClick
+  { label: "Sign Out", icon: PowerIcon, to: "#" }, // Use # since navigation is handled in onClick
 ];
 
 export function UserAvatar({ loggedIn, setLoggedIn }) {
@@ -31,6 +31,11 @@ export function UserAvatar({ loggedIn, setLoggedIn }) {
   const closeMenu = () => setIsMenuOpen(false);
   const navigate = useNavigate();
 
+  const handleSignOut = () => {
+    localStorage.removeItem("token");
+    setLoggedIn(false);
+    navigate("/login");
+  };
   return (
     <Menu open={isMenuOpen} handler={setIsMenuOpen} placement='bottom-end'>
       <MenuHandler>
@@ -55,14 +60,8 @@ export function UserAvatar({ loggedIn, setLoggedIn }) {
           const isLastItem = key === profileMenuItems.length - 1;
           return (
             <MenuItem
-              key={label}
-              onClick={() => {
-                closeMenu();
-                if (label === "Sign Out") {
-                  setLoggedIn(false);
-                  navigate("/login");
-                }
-              }}
+              onClick={isLastItem ? handleSignOut : undefined}
+              key={key}
               className={`flex items-center gap-2 rounded ${
                 isLastItem
                   ? "hover:bg-red-500/10 focus:bg-red-500/10 active:bg-red-500/10"

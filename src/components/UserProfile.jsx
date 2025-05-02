@@ -13,7 +13,7 @@ import { CiClock2 } from "react-icons/ci";
 import { jwtDecode } from "jwt-decode";
 import axios from "axios";
 
-export const UserProfile = () => {
+export const UserProfile = ({ loggedIn, setLoggedIn }) => {
   const token = localStorage.getItem("token");
   const user = jwtDecode(token);
   const [openCoverModal, setOpenCoverModal] = useState(false);
@@ -57,7 +57,7 @@ export const UserProfile = () => {
 
   return (
     <div className='min-h-screen bg-gray-50'>
-      <NavMenu />
+      <NavMenu loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
       <div className='container mx-auto px-4 py-8 sm:px-6 lg:px-8'>
         <h1 className='text-3xl font-bold text-[#183F5B] mb-6 md:text-4xl'>
           My Profile
