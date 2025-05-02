@@ -50,11 +50,11 @@ export function LogIn({ loggedIn, setLoggedIn }) {
     setIsSubmitting(true);
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/auth/login`,
+        `http://localhost:5000/auth/login`,
         formData
       );
       const token = response.data.token;
-      localStorage.setItem("token", token); 
+      localStorage.setItem("token", token);
       navigate("/profile");
       setLoggedIn(true);
     } catch (error) {

@@ -69,10 +69,7 @@ export function SignUp() {
 
     setIsSubmitting(true);
     try {
-      await axios.post(
-        `${process.env.REACT_APP_API_URL}/auth/register`,
-        formData
-      );
+      await axios.post(`http://localhost:5000/auth/register`, formData);
       setFormData({ username: "", email: "", password: "" }); // Clear form data on success
       navigate("/login");
     } catch (error) {

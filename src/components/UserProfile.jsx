@@ -11,6 +11,7 @@ import {
 } from "@material-tailwind/react";
 import { CiClock2 } from "react-icons/ci";
 import { jwtDecode } from "jwt-decode";
+import axios from "axios";
 
 export const UserProfile = () => {
   const token = localStorage.getItem("token");
