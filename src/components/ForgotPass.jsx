@@ -49,10 +49,9 @@ export function ForgotPass({ setResetPassStatus }) {
     setIsSubmitting(true);
 
     try {
-      await axios.post(
-        `${process.env.REACT_APP_API_URL}/auth/forgot-password`,
-        { email: formData.email }
-      );
+      await axios.post(`http://localhost:5000/auth/forgot-password`, {
+        email: formData.email,
+      });
       setFormData({ email: "" });
       navigate("/check-email", {
         state: { email: formData.email },

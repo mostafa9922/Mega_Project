@@ -45,7 +45,7 @@ function NavList({ loggedIn, setLoggedIn }) {
         variant='small'
         color='blue-gray'
         className='p-1 font-medium'>
-        <Link to='/profile' className='flex items-center text-white '>
+        <Link to='/dashboard' className='flex items-center text-white '>
           Home
         </Link>
       </Typography>
@@ -79,10 +79,6 @@ function NavList({ loggedIn, setLoggedIn }) {
       <div className='w-[15%]'>
         <UserAvatar loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
       </div>
-
-      <Typography as={Link} to='#'>
-        <IoSettingsOutline className='text-2xl hover:text-white' />
-      </Typography>
     </ul>
   );
 }

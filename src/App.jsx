@@ -3,7 +3,7 @@ import { Preview } from "./components/Preview";
 import { LogIn } from "./components/LogIn";
 import { SignUp } from "./components/SignUp";
 import { NotFound } from "./components/NotFound";
-import { Profile } from "./components/Profile";
+import { Dashboard } from "./components/Dashboard";
 import { ForgotPass } from "./components/ForgotPass";
 import { AboutUs } from "./components/AboutUs";
 import { Jobs } from "./components/Jobs";
@@ -13,6 +13,7 @@ import { CheckEmail } from "./components/CheckEmail";
 import { SetNewPass } from "./components/SetNewPass";
 import { Confirmation } from "./components/Confirmation";
 import { UserProfile } from "./components/UserProfile";
+import { Settings } from "./components/Settings";
 import { useEffect, useState } from "react";
 
 export default function App() {
@@ -62,12 +63,18 @@ export default function App() {
           <>
             <Route path='/userprofile' element={<UserProfile />} />
             <Route
-              path='/profile'
+              path='/dashboard'
               element={
-                <Profile loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
+                <Dashboard loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
               }
             />
             <Route path='/interview' element={<InterView />} />
+            <Route
+              path='/settings'
+              element={
+                <Settings loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
+              }
+            />
           </>
         )}
         <Route path='/*' element={<NotFound />} />

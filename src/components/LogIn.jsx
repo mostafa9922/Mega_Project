@@ -55,7 +55,7 @@ export function LogIn({ loggedIn, setLoggedIn }) {
       );
       const token = response.data.token;
       localStorage.setItem("token", token);
-      navigate("/profile");
+      navigate("/dashboard");
       setLoggedIn(true);
     } catch (error) {
       const errorMessage =

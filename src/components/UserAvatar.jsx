@@ -20,7 +20,7 @@ import { Link, useNavigate } from "react-router-dom";
 // Profile menu items
 const profileMenuItems = [
   { label: "My Profile", icon: UserCircleIcon, to: "/userprofile" },
-  { label: "Edit Profile", icon: Cog6ToothIcon, to: "#" }, // Add actual route
+  { label: "Settings", icon: Cog6ToothIcon, to: "/settings" }, // Add actual route
   { label: "Inbox", icon: InboxArrowDownIcon, to: "#" }, // Add actual route
   { label: "Help", icon: LifebuoyIcon, to: "#" }, // Add actual route
   { label: "Sign Out", icon: PowerIcon, to: "#" }, // Use # since navigation is handled in onClick
