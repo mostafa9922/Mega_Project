@@ -49,7 +49,7 @@ export function ForgotPass({ setResetPassStatus }) {
     setIsSubmitting(true);
 
     try {
-      await axios.post(`http://localhost:5000/auth/forgot-password`, {
+      await axios.post(`${import.meta.env.VITE_API_URL}/auth/forgot-password`, {
         email: formData.email,
       });
       setFormData({ email: "" });

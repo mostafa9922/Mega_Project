@@ -73,7 +73,7 @@ function NavList({ loggedIn, setLoggedIn }) {
         color='blue-gray'
         className='p-1 font-medium'>
         <Link to='/jobs' className='flex items-center text-white'>
-          jobs
+          Jobs
         </Link>
       </Typography>
       <div className='w-[15%]'>

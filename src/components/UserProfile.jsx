@@ -40,7 +40,7 @@ export const UserProfile = ({ loggedIn, setLoggedIn }) => {
   //   const fetchUserProfile = async () => {
   //     try {
   //       const response = await axios.get(
-  //         `http://localhost:5000/user/${user.nameid}`,
+  //         `${import.meta.env.VITE_API_URL}/user/${user.nameid}`,
   //         {
   //           headers: {
   //             Authorization: `Bearer ${token}`,
