@@ -8,7 +8,7 @@ import { BsThreeDots } from "react-icons/bs";
 import { FileUpload } from "./FileUpload";
 import { jwtDecode } from "jwt-decode";
 
-export const ProfileSetting = () => {
+export const ProfileSetting = ({ pageselected, setPageselected }) => {
   const initialState = {
     email: "",
     fullName: "",
@@ -127,7 +127,10 @@ export const ProfileSetting = () => {
           <p>This is your personal information that you can update anytime.</p>
         </div>
         <div className='block lg:hidden'>
-          <DrawerBar />
+          <DrawerBar
+            setPageselected={setPageselected}
+            pageselected={pageselected}
+          />
         </div>
       </div>
 

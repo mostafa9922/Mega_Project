@@ -1,4 +1,4 @@
-import JobCard from "./JobCard";
+import { JobCard } from "./JobCard";
 import { NavMenu } from "./NavMenu";
 
 export const Jobs = () => {

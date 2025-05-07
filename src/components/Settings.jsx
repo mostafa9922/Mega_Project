@@ -14,6 +14,7 @@ function DefaultSidebar({ setLoggedIn, setPageselected, pageselected }) {
 
   const handlePageSelect = (page) => {
     setPageselected(page);
+    localStorage.setItem("selectedPage", page);
   };
 
   const getLiClasses = (name) =>
@@ -66,8 +67,9 @@ function DefaultSidebar({ setLoggedIn, setPageselected, pageselected }) {
 }
 
 export const Settings = ({ loggedIn, setLoggedIn }) => {
-  const [pageselected, setPageselected] = useState("profile");
-
+  const [pageselected, setPageselected] = useState(() => {
+    return localStorage.getItem("selectedPage") || "profile";
+  });
   return (
     <div className='min-h-screen flex flex-col'>
       <NavMenu loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
@@ -80,7 +82,10 @@ export const Settings = ({ loggedIn, setLoggedIn }) => {
           />
         </div>
         {pageselected === "profile" ? (
-          <ProfileSetting />
+          <ProfileSetting
+            setPageselected={setPageselected}
+            pageselected={pageselected}
+          />
         ) : pageselected === "security" ? (
           <SecuritySetting />
         ) : pageselected === "jobs" ? (
