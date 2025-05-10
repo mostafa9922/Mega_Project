@@ -72,7 +72,7 @@ export const Preview = ({ loggedIn, setLoggedIn }) => {
             <div className='w-full max-w-md'>
               <img
                 className='w-full max-h-[300px] sm:max-h-full h-auto object-cover object-center'
-                src='/image 2.png'
+                src='/Illustration.png'
                 alt='Illustration of job search process'
                 loading='lazy'
               />

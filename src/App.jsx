@@ -44,7 +44,10 @@ export default function App() {
           </>
         )}
 
-        <Route path='/aboutus' element={<AboutUs />} />
+        <Route
+          path='/aboutus'
+          element={<AboutUs loggedIn={loggedIn} setLoggedIn={setLoggedIn} />}
+        />
         <Route path='/jobs' element={<Jobs />} />
         <Route path='/contact-us' element={<ContactUs />} />
         <Route

@@ -3,20 +3,39 @@ import { Link } from "react-router-dom";
 
 const SITEMAP = [
   {
-    title: "Company",
-    links: ["About Us", "Careers", "Our Team", "Projects"],
+    title: "Info",
+    links: [
+      { label: "About Us", path: "/aboutus" },
+      { label: "Support", path: "/support" },
+      { label: "Blog", path: "/blog" },
+      { label: "Download Apps", path: "/download-apps" },
+      { label: "The Slack App", path: "/slack-app" },
+    ],
   },
   {
-    title: "Help Center",
-    links: ["Discord", "X", "GitHub", "/contact-us"],
+    title: "Features",
+    links: [
+      { label: "Discord", path: "/discord" },
+      { label: "X", path: "/x" },
+      { label: "GitHub", path: "/github" },
+      { label: "Contact Us", path: "/contact-us" },
+    ],
   },
   {
-    title: "Resources",
-    links: ["Blog", "Newsletter", "Free Products", "Affiliate Program"],
+    title: "Helpful Links",
+    links: [
+      { label: "Blog", path: "/blog" },
+      { label: "Newsletter", path: "/newsletter" },
+      { label: "Free Products", path: "/free-products" },
+      { label: "Affiliate Program", path: "/affiliate" },
+    ],
   },
   {
-    title: "Products",
-    links: ["Templates", "UI Kits", "Icons", "Mockups"],
+    title: "Policies",
+    links: [
+      { label: "Terms of Service", path: "/terms" },
+      { label: "Privacy Policy", path: "/privacy" },
+    ],
   },
 ];
 
@@ -36,25 +55,17 @@ export function Footer() {
                 {title}
               </Typography>
               <ul className='space-y-1'>
-                {links.map((link, key) => (
+                {links.map(({ label, path }, index) => (
                   <Typography
-                    key={key}
+                    key={index}
                     as='li'
                     color='blue-gray'
                     className='font-normal'>
-                    {link === "/contact-us" ? (
-                      <Link
-                        to='/contact-us'
-                        className='inline-block py-1 pr-2 transition-transform hover:scale-105'>
-                        Contact Us
-                      </Link>
-                    ) : (
-                      <Link
-                        to={`#${link.toLowerCase().replace(" ", "-")}`} // Default behavior for other links
-                        className='inline-block py-1 pr-2 transition-transform hover:scale-105'>
-                        {link}
-                      </Link>
-                    )}
+                    <Link
+                      to={path}
+                      className='inline-block py-1 pr-2 transition-transform hover:scale-105'>
+                      {label}
+                    </Link>
                   </Typography>
                 ))}
               </ul>
@@ -68,7 +79,6 @@ export function Footer() {
             © {currentYear} <Link to='#'>LOOkUP</Link>. All Rights Reserved.
           </Typography>
           <div className='flex gap-4 text-blue-gray-900 sm:justify-center'>
-            {/* Social media icons remain unchanged */}
             <Typography
               as={Link}
               to='#'
@@ -85,7 +95,7 @@ export function Footer() {
                 />
               </svg>
             </Typography>
-            {/* Rest of the social media icons remain the same */}
+            {/* Add other social icons here */}
           </div>
         </div>
       </div>

@@ -88,7 +88,7 @@ function NavList({ isMobile = false, loggedIn, setLoggedIn }) {
         variant='small'
         color='blue-gray'
         className='p-1 font-medium'>
-        <Link to='#' className='flex items-center text-[#183F5B] '>
+        <Link to='/dashboard' className='flex items-center text-[#183F5B] '>
           Home
         </Link>
       </Typography>
