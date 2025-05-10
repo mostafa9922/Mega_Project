@@ -75,11 +75,11 @@ export const AboutUs = ({ loggedIn, setLoggedIn }) => {
           <form onSubmit={handleSubmit} className='w-full max-w-md'>
             <div className='flex gap-2 items-center bg-white p-2 rounded'>
               <Input
+                label='Email'
                 type='email'
-                placeholder='Enter Your Email'
                 required
                 aria-label='Email Address'
-                className='flex-grow placeholder:opacity-100 bg-white text-black'
+                className='flex-grow bg-white text-black'
               />
               <Button
                 type='submit'

@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { FaApple } from "react-icons/fa";
 import axios from "axios";
 
-export function SignUp() {
+export function SignUp({ loggedIn, SetLoggedIn }) {
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -74,7 +74,9 @@ export function SignUp() {
         formData
       );
       setFormData({ username: "", email: "", password: "" }); // Clear form data on success
-      navigate("/login");
+      // navigate("/login");
+      SetLoggedIn(true);
+      navigate("/personal-info");
     } catch (error) {
       const errorMessage =
         error.response?.data?.error ||

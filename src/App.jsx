@@ -15,6 +15,8 @@ import { Confirmation } from "./components/Confirmation";
 import { UserProfile } from "./components/UserProfile";
 import { Settings } from "./components/Settings";
 import { useEffect, useState } from "react";
+import { PersonalInfo } from "./components/PersonalInfo";
+import { CareerInfo } from "./components/CareerInfo";
 
 export default function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -40,7 +42,10 @@ export default function App() {
               path='/login'
               element={<LogIn loggedIn={loggedIn} setLoggedIn={setLoggedIn} />}
             />
-            <Route path='/signup' element={<SignUp />} />
+            <Route
+              path='/signup'
+              element={<SignUp loggedIn={loggedIn} setLoggedIn={setLoggedIn} />}
+            />
           </>
         )}
 
@@ -80,6 +85,11 @@ export default function App() {
             />
           </>
         )}
+
+        <Route path='personal-info' element={<PersonalInfo />} />
+
+        <Route path='career-info' element={<CareerInfo />} />
+
         <Route path='/*' element={<NotFound />} />
       </Routes>
     </div>

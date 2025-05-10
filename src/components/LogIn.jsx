@@ -103,8 +103,8 @@ export function LogIn({ setLoggedIn }) {
               value={formData.email}
               onChange={handleChange}
               placeholder='name@mail.com'
-              className='w-full placeholder:opacity-100 focus:border-t-primary border-t-blue-gray-200'
-              labelProps={{ className: "hidden" }}
+              className='w-full placeholder:opacity-100'
+              labelProps={{ className: "hidden " }}
             />
           </div>
           <div className='mb-6'>
@@ -122,11 +122,12 @@ export function LogIn({ setLoggedIn }) {
             )}
             <Input
               size='lg'
+              label='Password'
               placeholder='********'
               name='password'
               value={formData.password}
               onChange={handleChange}
-              className='w-full placeholder:opacity-100 focus:border-t-primary border-t-blue-gray-200'
+              className='w-full placeholder:opacity-100 '
               type={passwordShown ? "text" : "password"}
               icon={
                 passwordShown ? (
