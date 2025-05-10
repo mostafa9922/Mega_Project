@@ -1,7 +1,6 @@
 import { Textarea, IconButton } from "@material-tailwind/react";
-import { FaMicrophone } from "react-icons/fa";
 
-export function ChatData() {
+export function ChatBox() {
   return (
     <div className='flex w-full flex-row items-center gap-2 rounded-[99px] border border-gray-900/10 bg-gray-900/5 p-2'>
       <div className='flex'>
@@ -48,8 +47,7 @@ export function ChatData() {
           className: "before:content-none after:content-none",
         }}
       />
-      <div className="flex items-center gap-2">
-        <FaMicrophone />
+      <div>
         <IconButton variant='text' className='rounded-full'>
           <svg
             xmlns='http://www.w3.org/2000/svg'

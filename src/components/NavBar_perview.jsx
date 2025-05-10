@@ -167,7 +167,7 @@ export function NavBar_perview({ loggedIn, setLoggedIn }) {
         </div>
         <IconButton
           variant='text'
-          className='ml-auto h-6 w-6 text-white hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden'
+          className='ml-auto h-6 w-6 text-[#183F5B] hover:bg-transparent focus:bg-transparent active:bg-transparent lg:hidden'
           ripple={false}
           onClick={() => setOpenNav(!openNav)}>
           {openNav ? (

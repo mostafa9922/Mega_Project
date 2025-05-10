@@ -1,14 +1,8 @@
-import { ChatData } from "./ChatData";
+import { ChatBox } from "./ChatBox";
 import { NavMenu } from "./NavMenu";
 import { SideBar } from "./SideBar";
 
-import {
-  Card,
-  CardBody,
-  CardFooter,
-  Typography,
-  Button,
-} from "@material-tailwind/react";
+import { Card, CardBody, Typography } from "@material-tailwind/react";
 
 export const InterView = () => {
   return (
@@ -48,7 +42,7 @@ export const InterView = () => {
               </CardBody>
             </Card>
           </div>
-          <ChatData />
+          <ChatBox />
         </div>
       </div>
     </div>
