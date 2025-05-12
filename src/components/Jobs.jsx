@@ -1,35 +1,81 @@
+import { useState } from "react";
 import { JobCard } from "./JobCard";
 import { NavMenu } from "./NavMenu";
+import { Footer } from "./Footer";
+import { JobDrawerNav } from "./JobDrawerNav";
+import { JobSideBar } from "./JobSideBar";
+import { Typography, Select, Option } from "@material-tailwind/react";
+import { Pagination } from "./Pagination";
+
+const allJobs = new Array(73).fill({}); // simulate 73 jobs
 
 export const Jobs = () => {
+  const [active, setActive] = useState(1);
+  const jobsPerPage = 10;
+
+  // Calculate jobs to display on the current page
+  const startIndex = (active - 1) * jobsPerPage;
+  const currentJobs = allJobs.slice(startIndex, startIndex + jobsPerPage);
+
   return (
-    <div>
+    <div className='min-h-screen bg-white flex flex-col'>
       <NavMenu />
-      <div className='flex flex-col justify-center items-center mt-10'>
-        <div className='relative flex flex-col w-[60%] '>
-          <svg
-            xmlns='http://www.w3.org/2000/svg'
-            viewBox='0 0 24 24'
-            fill='currentColor'
-            className='absolute w-5 h-5 top-2.5 left-2.5 text-slate-600'>
-            <path
-              fillRule='evenodd'
-              d='M10.5 3.75a6.75 6.75 0 1 0 0 13.5 6.75 6.75 0 0 0 0-13.5ZM2.25 10.5a8.25 8.25 0 1 1 14.59 5.28l4.69 4.69a.75.75 0 1 1-1.06 1.06l-4.69-4.69A8.25 8.25 0 0 1 2.25 10.5Z'
-              clipRule='evenodd'
-            />
-          </svg>
-          <input
-            className='w-full bg-[#F5F9FF] placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md pl-10 pr-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow'
-            placeholder='Job Search'
-            type='text'
-            name='search'
-            id='search'
-          />
-        </div>
-        <div className='w-[60%] mt-10'>
-          <JobCard />
-        </div>
-      </div>
+
+      <main className='flex-1 flex flex-col lg:flex-row'>
+        <aside className='w-full lg:w-1/4 px-4 pt-6'>
+          <div className='block lg:hidden'>
+            <JobDrawerNav />
+          </div>
+          <div className='hidden lg:block min-h-full'>
+            <JobSideBar />
+          </div>
+        </aside>
+
+        <section className='w-full lg:w-3/4 px-4 py-10 flex flex-col items-start'>
+          <div className='w-full flex flex-col lg:flex-row justify-between items-start lg:items-center mb-8'>
+            <div className='mb-4 lg:mb-0'>
+              <Typography variant='h3' className='text-[#373636]'>
+                Search Results
+              </Typography>
+              <span className='text-[#7C8493]'>
+                Showing {allJobs.length} Results
+              </span>
+            </div>
+            <div className='flex flex-col md:flex-row items-center gap-3 w-full lg:w-auto'>
+              <label htmlFor='sort-select' className='text-sm font-medium'>
+                Sort By:
+              </label>
+              <Select
+                id='sort-select'
+                variant='standard'
+                label='Sort By'
+                defaultValue='Most Relevant'
+                className='w-full'>
+                <Option>Most Relevant</Option>
+                <Option>Newest</Option>
+                <Option>Highest Salary</Option>
+                <Option>Location</Option>
+              </Select>
+            </div>
+          </div>
+
+          <div className='w-full max-w-3xl flex flex-col gap-5'>
+            {currentJobs.map((job, index) => (
+              <JobCard key={index} job={job} />
+            ))}
+
+            <div className='mt-8 flex justify-center'>
+              <Pagination
+                active={active}
+                totalPages={Math.ceil(allJobs.length / jobsPerPage)}
+                onChange={setActive}
+              />
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <Footer />
     </div>
   );
 };
