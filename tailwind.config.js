@@ -10,9 +10,9 @@ module.exports = withMT({
   theme: {
     extend: {
       backgroundImage: {
-        'hero-pattern': "url('/img/hero-pattern.svg')",
-        'footer-texture': "url('/img/footer-texture.png')",
-      }
+        "hero-pattern": "url('/job_search.png')",
+        "footer-texture": "url('/job_search.png')",
+      },
     },
   },
   plugins: [],

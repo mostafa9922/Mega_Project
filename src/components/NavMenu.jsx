@@ -8,7 +8,6 @@ import {
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { IoSettingsOutline } from "react-icons/io5";
 import { UserAvatar } from "./UserAvatar";
 
 function NavList({ loggedIn, setLoggedIn }) {

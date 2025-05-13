@@ -11,9 +11,9 @@ import { Link } from "react-router-dom";
 import { IoIosCheckmarkCircle } from "react-icons/io";
 import { IoCheckmarkCircle } from "react-icons/io5";
 import { RiPokerDiamondsFill } from "react-icons/ri";
-import { JobList } from "./JobList";
 import React from "react";
 import { ApplicaionDialog } from "./ApplicaionDialog";
+import { SmallCardJob } from "./SmallCardJob";
 
 export const JobDetails = () => {
   const [isFavorite, setIsFavorite] = React.useState(false);
@@ -21,14 +21,88 @@ export const JobDetails = () => {
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(!open);
-
+  const relatedJobs = [
+    {
+      id: "job1",
+      title: "Social Media Manager",
+      company: "Big Kahuna Burger Ltd.",
+      location: "On-Site",
+      salary: "$400 - $1000",
+      logo: "/smallJob.png",
+    },
+    {
+      id: "job2",
+      title: "Frontend Developer",
+      company: "TechTrend Innovations",
+      location: "Remote",
+      salary: "$800 - $1500",
+      logo: "/smallJob.png",
+    },
+    {
+      id: "job3",
+      title: "UX Designer",
+      company: "Creative Solutions Inc.",
+      location: "Hybrid",
+      salary: "$600 - $1200",
+      logo: "/smallJob.png",
+    },
+    {
+      id: "job4",
+      title: "Data Analyst",
+      company: "Insight Analytics",
+      location: "On-Site",
+      salary: "$500 - $1100",
+      logo: "/smallJob.png",
+    },
+    {
+      id: "job5",
+      title: "Product Manager",
+      company: "GrowthLabs",
+      location: "Remote",
+      salary: "$900 - $1800",
+      logo: "/smallJob.png",
+    },
+    {
+      id: "job6",
+      title: "Backend Engineer",
+      company: "CodeWorks",
+      location: "Hybrid",
+      salary: "$700 - $1400",
+      logo: "/smallJob.png",
+    },
+    {
+      id: "job7",
+      title: "Marketing Specialist",
+      company: "BrandBoost",
+      location: "On-Site",
+      salary: "$450 - $1000",
+      logo: "/smallJob.png",
+    },
+    {
+      id: "job8",
+      title: "Graphic Designer",
+      company: "DesignPro Studio",
+      location: "Remote",
+      salary: "$500 - $1100",
+      logo: "/smallJob.png",
+    },
+  ];
   return (
     <div className='min-h-screen'>
       <ApplicaionDialog open={open} handleOpen={handleOpen} />
       <NavMenu />
-      <div className='flex flex-col lg:flex-row-reverse justify-between px-4 sm:px-8 lg:px-20 pt-6 sm:pt-8 lg:pt-10'>
-        <aside className='w-full lg:w-1/4 mb-6 lg:mb-0'>
-          <JobList />
+      <div className='flex flex-col lg:flex-row-reverse justify-between px-4 sm:px-8 lg:px-20 pt-6 sm:pt-8 lg:pt-10 mb-5'>
+        <aside className='w-full lg:w-1/4  lg:mb-0 flex flex-col gap-3 border-2 border-[#87878766] rounded-xl p-4'>
+          <Typography variant='h3' className='text-[#183F5B]'>
+            Related Jobs
+          </Typography>
+          {relatedJobs.map((job, index) => (
+            <SmallCardJob
+              key={index}
+              {...job}
+              to={`/job-details/${index + 1}`}
+            />
+          ))}
         </aside>
         <main className='w-full lg:w-3/4 flex flex-col gap-6 sm:gap-8 lg:gap-10 lg:pr-7'>
           <div className='flex flex-col gap-6 sm:gap-8'>
@@ -213,7 +287,7 @@ export const JobDetails = () => {
               in data analytics!
             </p>
             <Link
-              to='/company-details'
+              to='/company-details/1'
               className='text-[#549ACC] border-b-2 border-[#549ACC] text-sm sm:text-base'>
               View more jobs from this company
             </Link>

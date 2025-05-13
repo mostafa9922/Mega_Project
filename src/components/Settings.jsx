@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { ProfileSetting } from "./ProfileSetting";
 import { SecuritySetting } from "./SecuritySetting";
 import { SavedJobs } from "./SavedJobs";
+import { Footer } from "./Footer";
 
 function DefaultSidebar({ setLoggedIn, setPageselected, pageselected }) {
   const handleSignOut = () => {
@@ -92,6 +93,7 @@ export const Settings = ({ loggedIn, setLoggedIn }) => {
           <SavedJobs />
         ) : null}
       </div>
+      <Footer />
     </div>
   );
 };
