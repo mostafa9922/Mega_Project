@@ -2,16 +2,18 @@ import { Textarea, IconButton } from "@material-tailwind/react";
 
 export function ChatBox() {
   return (
-    <div className='flex w-full flex-row items-center gap-2 rounded-[99px] border border-gray-900/10 bg-gray-900/5 p-2'>
-      <div className='flex'>
-        <IconButton variant='text' className='rounded-full'>
+    <div className='flex w-full flex-col sm:flex-row items-center gap-2 sm:gap-3 rounded-[99px] border border-gray-900/10 bg-gray-900/5 p-2 sm:p-3'>
+      <div className='flex w-full sm:w-auto justify-between sm:justify-start gap-2 sm:gap-3 mb-2 sm:mb-0'>
+        <IconButton
+          variant='text'
+          className='rounded-full h-8 w-8 sm:h-10 sm:w-10'>
           <svg
             xmlns='http://www.w3.org/2000/svg'
             fill='none'
             viewBox='0 0 24 24'
             strokeWidth={2}
             stroke='currentColor'
-            className='h-5 w-5'>
+            className='h-4 w-4 sm:h-5 sm:w-5'>
             <path
               strokeLinecap='round'
               strokeLinejoin='round'
@@ -19,14 +21,16 @@ export function ChatBox() {
             />
           </svg>
         </IconButton>
-        <IconButton variant='text' className='rounded-full'>
+        <IconButton
+          variant='text'
+          className='rounded-full h-8 w-8 sm:h-10 sm:w-10'>
           <svg
             xmlns='http://www.w3.org/2000/svg'
             fill='none'
             viewBox='0 0 24 24'
             stroke='currentColor'
             strokeWidth={2}
-            className='h-5 w-5'>
+            className='h-4 w-4 sm:h-5 sm:w-5'>
             <path
               strokeLinecap='round'
               strokeLinejoin='round'
@@ -39,23 +43,25 @@ export function ChatBox() {
         rows={1}
         resize={true}
         placeholder='Your Message'
-        className='min-h-full !border-0 focus:border-transparent'
+        className='min-h-full w-full sm:w-auto !border-0 focus:border-transparent flex-1 text-sm sm:text-base'
         containerProps={{
-          className: "grid h-full",
+          className: "grid h-full w-full sm:w-auto",
         }}
         labelProps={{
           className: "before:content-none after:content-none",
         }}
       />
-      <div>
-        <IconButton variant='text' className='rounded-full'>
+      <div className='flex justify-end w-full sm:w-auto mt-2 sm:mt-0'>
+        <IconButton
+          variant='text'
+          className='rounded-full h-8 w-8 sm:h-10 sm:w-10'>
           <svg
             xmlns='http://www.w3.org/2000/svg'
             fill='none'
             viewBox='0 0 24 24'
             stroke='currentColor'
             strokeWidth={2}
-            className='h-5 w-5'>
+            className='h-4 w-4 sm:h-5 sm:w-5'>
             <path
               strokeLinecap='round'
               strokeLinejoin='round'
