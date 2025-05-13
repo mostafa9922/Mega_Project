@@ -17,6 +17,9 @@ import { Settings } from "./components/Settings";
 import { useEffect, useState } from "react";
 import { PersonalInfo } from "./components/PersonalInfo";
 import { CareerInfo } from "./components/CareerInfo";
+import { JobDetails } from "./components/JobDetails";
+import { CompanyDetials } from "./components/CompanyDetials";
+import { JobSearch } from "./components/JobSearch";
 
 export default function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -48,7 +51,6 @@ export default function App() {
             />
           </>
         )}
-
         <Route
           path='/aboutus'
           element={<AboutUs loggedIn={loggedIn} setLoggedIn={setLoggedIn} />}
@@ -66,7 +68,6 @@ export default function App() {
             <Route path='/confirmation' element={<Confirmation />} />
           </>
         )}
-
         {loggedIn && (
           <>
             <Route path='/userprofile' element={<UserProfile />} />
@@ -85,11 +86,11 @@ export default function App() {
             />
           </>
         )}
-
-        <Route path='personal-info' element={<PersonalInfo />} />
-
-        <Route path='career-info' element={<CareerInfo />} />
-
+        <Route path='/personal-info' element={<PersonalInfo />} />
+        <Route path='/job-details/:id' element={<JobDetails />} />
+        <Route path='/company-details/:id' element={<CompanyDetials />} />
+        <Route path='/career-info' element={<CareerInfo />} />
+        <Route path='/job-search' element={<JobSearch />} />
         <Route path='/*' element={<NotFound />} />
       </Routes>
     </div>

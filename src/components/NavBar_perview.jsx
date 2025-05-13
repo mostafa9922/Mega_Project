@@ -89,7 +89,7 @@ function NavList({ isMobile = false, loggedIn, setLoggedIn }) {
         color='blue-gray'
         className='p-1 font-medium'>
         <Link to='/dashboard' className='flex items-center text-[#183F5B] '>
-          Home
+          DashBoard
         </Link>
       </Typography>
       <Typography
@@ -106,8 +106,8 @@ function NavList({ isMobile = false, loggedIn, setLoggedIn }) {
         variant='small'
         color='blue-gray'
         className='p-1 font-medium'>
-        <Link to='#' className='text-[#183F5B] '>
-          Job Track
+        <Link to='/job-search' className='text-[#183F5B] '>
+          Job Search
         </Link>
       </Typography>
       <Typography
@@ -115,17 +115,13 @@ function NavList({ isMobile = false, loggedIn, setLoggedIn }) {
         variant='small'
         color='blue-gray'
         className='p-1 font-medium'>
-        <Link to='#' className='flex items-center text-[#183F5B]'>
-          Profile
+        <Link to='/jobs' className='flex items-center text-[#183F5B]'>
+          jobs
         </Link>
       </Typography>
       <div className='w-[15%]'>
         <UserAvatar />
       </div>
-
-      <Typography as={Link} to='#'>
-        <IoSettingsOutline className='text-2xl hover:text-white' />
-      </Typography>
     </ul>
   );
 }

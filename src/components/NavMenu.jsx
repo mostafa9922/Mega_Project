@@ -46,7 +46,7 @@ function NavList({ loggedIn, setLoggedIn }) {
         color='blue-gray'
         className='p-1 font-medium'>
         <Link to='/dashboard' className='flex items-center text-white '>
-          Home
+          DashBoard
         </Link>
       </Typography>
       <Typography
@@ -63,8 +63,8 @@ function NavList({ loggedIn, setLoggedIn }) {
         variant='small'
         color='blue-gray'
         className='p-1 font-medium'>
-        <Link to='#' className='text-white '>
-          Job Track
+        <Link to='/job-search' className='text-white '>
+          Job search
         </Link>
       </Typography>
       <Typography

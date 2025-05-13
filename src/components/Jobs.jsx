@@ -6,8 +6,9 @@ import { JobDrawerNav } from "./JobDrawerNav";
 import { JobSideBar } from "./JobSideBar";
 import { Typography, Select, Option } from "@material-tailwind/react";
 import { Pagination } from "./Pagination";
+import { Link } from "react-router-dom";
 
-const allJobs = new Array(73).fill({}); // simulate 73 jobs
+const allJobs = new Array(73).fill({}).map((_, index) => ({ id: index + 1 })); // Add unique IDs
 
 export const Jobs = () => {
   const [active, setActive] = useState(1);
@@ -60,8 +61,10 @@ export const Jobs = () => {
           </div>
 
           <div className='w-full max-w-3xl flex flex-col gap-5'>
-            {currentJobs.map((job, index) => (
-              <JobCard key={index} job={job} />
+            {currentJobs.map((job) => (
+              <Link to={`/job-details/${job.id}`} key={job.id}>
+                <JobCard job={job} />
+              </Link>
             ))}
 
             <div className='mt-8 flex justify-center'>

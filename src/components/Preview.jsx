@@ -1,6 +1,5 @@
 import { NavBar_perview } from "./NavBar_perview";
 import { Card, CardBody, Typography, Button } from "@material-tailwind/react";
-import { LuFolderSearch } from "react-icons/lu";
 import { Footer } from "./Footer";
 import { Link } from "react-router-dom";
 
