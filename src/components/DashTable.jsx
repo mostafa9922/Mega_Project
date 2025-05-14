@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Card,
   CardHeader,
@@ -15,44 +15,6 @@ import { IoFilterOutline } from "react-icons/io5";
 
 const TABLE_HEAD = ["#", "Company Name", "Roles", "Date Applied", "Status"];
 
-const TABLE_ROWS = [
-  {
-    img: "https://docs.material-tailwind.com/img/logos/logo-spotify.svg",
-    name: "Spotify",
-    roles: "Social Media Assistant",
-    date: "2021-07-24",
-    status: "In Review",
-  },
-  {
-    img: "https://docs.material-tailwind.com/img/logos/logo-amazon.svg",
-    name: "Amazon",
-    roles: "Social Media Assistant",
-    date: "2021-07-24",
-    status: "Shortlisted",
-  },
-  {
-    img: "https://docs.material-tailwind.com/img/logos/logo-pinterest.svg",
-    name: "Pinterest",
-    roles: "Social Media Assistant",
-    date: "2021-07-24",
-    status: "Offered",
-  },
-  {
-    img: "https://docs.material-tailwind.com/img/logos/logo-google.svg",
-    name: "Google",
-    roles: "Social Media Assistant",
-    date: "2021-07-24",
-    status: "Interviewing",
-  },
-  {
-    img: "https://docs.material-tailwind.com/img/logos/logo-netflix.svg",
-    name: "Netflix",
-    roles: "Social Media Assistant",
-    date: "2021-07-24",
-    status: "Unsuitable",
-  },
-];
-
 const statusColor = {
   "In Review": "blue",
   Shortlisted: "amber",
@@ -61,10 +23,9 @@ const statusColor = {
   Unsuitable: "red",
 };
 
-export function DashTable() {
+export function DashTable({ filter, TABLE_ROWS }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredRows, setFilteredRows] = useState(TABLE_ROWS);
-
   const [currentPage, setCurrentPage] = useState(1);
   const rowsPerPage = 5;
 
@@ -81,6 +42,26 @@ export function DashTable() {
     setFilteredRows(result);
     setCurrentPage(1); // Reset to first page after search
   };
+
+  const applyFilter = () => {
+    let filtered = TABLE_ROWS;
+
+    if (filter?.status != "All") {
+      filtered = filtered.filter((row) => row.status === filter.status);
+    }
+    if (filter?.company) {
+      filtered = filtered.filter((row) =>
+        row.name.toLowerCase().includes(filter.company.toLowerCase())
+      );
+    }
+
+    setFilteredRows(filtered);
+    setCurrentPage(1);
+  };
+
+  useEffect(() => {
+    applyFilter();
+  }, [filter]);
 
   const handlePageChange = (page) => {
     if (page >= 1 && page <= totalPages) setCurrentPage(page);

@@ -4,6 +4,43 @@ import { Footer } from "./Footer";
 import { DashTable } from "./DashTable";
 
 export const Dashboard = ({ loggedIn, setLoggedIn }) => {
+  const [TABLE_ROWS] = useState([
+    {
+      img: "https://docs.material-tailwind.com/img/logos/logo-spotify.svg",
+      name: "Spotify",
+      roles: "Social Media Assistant",
+      date: "2021-07-24",
+      status: "In Review",
+    },
+    {
+      img: "https://docs.material-tailwind.com/img/logos/logo-amazon.svg",
+      name: "Amazon",
+      roles: "Social Media Assistant",
+      date: "2021-07-24",
+      status: "Shortlisted",
+    },
+    {
+      img: "https://docs.material-tailwind.com/img/logos/logo-pinterest.svg",
+      name: "Pinterest",
+      roles: "Social Media Assistant",
+      date: "2021-07-24",
+      status: "Offered",
+    },
+    {
+      img: "https://docs.material-tailwind.com/img/logos/logo-google.svg",
+      name: "Google",
+      roles: "Social Media Assistant",
+      date: "2021-07-24",
+      status: "Interviewing",
+    },
+    {
+      img: "https://docs.material-tailwind.com/img/logos/logo-netflix.svg",
+      name: "Netflix",
+      roles: "Social Media Assistant",
+      date: "2021-07-24",
+      status: "Unsuitable",
+    },
+  ]);
   const [activeFilter, setActiveFilter] = useState("All");
   const filters = [
     "All",
@@ -15,9 +52,21 @@ export const Dashboard = ({ loggedIn, setLoggedIn }) => {
   ];
 
   const getFilterCount = (filter) => {
-    if (filter === "All") return 5;
+    if (filter === "All") return TABLE_ROWS.length;
+    if (filter === "In Review")
+      return TABLE_ROWS.filter((row) => row.status === filter).length;
+    if (filter === "Interviewing")
+      return TABLE_ROWS.filter((row) => row.status === filter).length;
+    if (filter === "Assessment")
+      return TABLE_ROWS.filter((row) => row.status === filter).length;
+    if (filter === "Offered")
+      return TABLE_ROWS.filter((row) => row.status === filter).length;
+    if (filter === "Hired")
+      return TABLE_ROWS.filter((row) => row.status === filter).length;
     return 0;
   };
+
+  const [selectedStatus, setSelectedStatus] = useState("All");
 
   return (
     <div className='min-h-screen bg-gray-50'>
@@ -38,7 +87,11 @@ export const Dashboard = ({ loggedIn, setLoggedIn }) => {
           {filters.map((filter) => (
             <button
               key={filter}
-              onClick={() => setActiveFilter(filter)}
+              name={filter}
+              onClick={(e) => {
+                setActiveFilter(filter);
+                setSelectedStatus(e.target.name);
+              }}
               className={`text-sm sm:text-base ${
                 activeFilter === filter
                   ? "text-[#25324B] font-bold border-b-2 border-[#25324B]"
@@ -50,7 +103,10 @@ export const Dashboard = ({ loggedIn, setLoggedIn }) => {
         </div>
 
         <div>
-          <DashTable />
+          <DashTable
+            filter={{ status: selectedStatus }}
+            TABLE_ROWS={TABLE_ROWS}
+          />
         </div>
       </div>
       <Footer />

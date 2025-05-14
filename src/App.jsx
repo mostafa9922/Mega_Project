@@ -20,6 +20,7 @@ import { CareerInfo } from "./components/CareerInfo";
 import { JobDetails } from "./components/JobDetails";
 import { CompanyDetials } from "./components/CompanyDetials";
 import { JobSearch } from "./components/JobSearch";
+import { History } from "./History";
 
 export default function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -91,6 +92,8 @@ export default function App() {
         <Route path='/company-details/:id' element={<CompanyDetials />} />
         <Route path='/career-info' element={<CareerInfo />} />
         <Route path='/job-search' element={<JobSearch />} />
+        <Route path='/interview' element={<InterView />} />
+        <Route path='/history' element={<History />} />
         <Route path='/*' element={<NotFound />} />
       </Routes>
     </div>
