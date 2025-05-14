@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Typography,
   Input,
@@ -11,19 +11,15 @@ import { NavMenu } from "./NavMenu";
 import { useNavigate } from "react-router-dom";
 import { CogIcon, UserIcon } from "@heroicons/react/24/outline";
 import { FileUpload } from "./FileUpload";
+import axios from "axios";
 
 export function StepperWithContent() {
-  const [activeStep, setActiveStep] = React.useState(1);
-  const [isLastStep, setIsLastStep] = React.useState(false);
-  const [isFirstStep, setIsFirstStep] = React.useState(false);
+  const [activeStep, setActiveStep] = useState(1);
   const navigate = useNavigate();
 
   return (
     <div className='w-full px-4 sm:px-8 lg:px-24 py-4'>
-      <Stepper
-        activeStep={activeStep}
-        isLastStep={(value) => setIsLastStep(value)}
-        isFirstStep={(value) => setIsFirstStep(value)}>
+      <Stepper activeStep={activeStep}>
         <Step
           onClick={() => {
             setActiveStep(0);
@@ -64,8 +60,87 @@ export function StepperWithContent() {
 }
 
 export const CareerInfo = () => {
-  const handleSubmit = (e) => {
+  const navigate = useNavigate();
+  const [form, setForm] = useState({
+    jobTitle: "",
+    portfolio: "",
+    linkedin: "",
+    about: "",
+  });
+  const [errors, setErrors] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    const stored = localStorage.getItem("personalInfo");
+    if (stored) {
+      setForm(JSON.parse(stored));
+    }
+  }, []);
+
+  const isValidURL = (string) => {
+    try {
+      new URL(string);
+      return true;
+    } catch (_) {
+      return false;
+    }
+  };
+
+  const validate = () => {
+    const temp = {
+      jobTitle: form.jobTitle ? "" : "Job Title is required.",
+      portfolio:
+        form.portfolio && isValidURL(form.portfolio)
+          ? ""
+          : "Valid Portfolio URL is required.",
+      linkedin:
+        form.linkedin && isValidURL(form.linkedin)
+          ? ""
+          : "Valid LinkedIn URL is required.",
+      about: form.about ? "" : "About Me is required.",
+    };
+    setErrors(temp);
+    return Object.values(temp).every((x) => x === "");
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    const updatedForm = { ...form, [name]: value };
+    setForm(updatedForm);
+
+    // real-time validation per field
+    setErrors((prev) => ({
+      ...prev,
+      [name]:
+        name === "portfolio" || name === "linkedin"
+          ? !value || !isValidURL(value)
+            ? `Valid ${name} URL is required.`
+            : ""
+          : name === "jobTitle" && !value
+          ? "Job Title is required."
+          : name === "about" && !value
+          ? "About Me is required."
+          : "",
+    }));
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!validate()) return;
+
+    setIsSubmitting(true);
+
+    try {
+      await axios.post(`${import.meta.env.VITE_API_URL}/api/profiles`, form);
+      localStorage.removeItem("personalInfo");
+      navigate("/dashboard");
+    } catch (error) {
+      const errorMessage =
+        error.response?.data?.error || "An unexpected error occurred";
+      setErrors((prev) => ({ ...prev, general: errorMessage }));
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -92,19 +167,82 @@ export const CareerInfo = () => {
         <form onSubmit={handleSubmit} className='space-y-8'>
           <div className='flex flex-col lg:flex-row justify-around gap-8'>
             <div className='flex flex-col gap-8 w-full lg:w-2/3'>
-              <Input label='Title of Current Job' type='text' />
-              <Input label='Portfolio URL' type='url' />
-              <Input label='LinkedIn URL' type='url' />
-              <Textarea label='About Me' />
+              <div>
+                <Input
+                  label='Title of Current Job'
+                  name='jobTitle'
+                  value={form.jobTitle}
+                  onChange={handleChange}
+                  className={errors.jobTitle ? "border-red-500" : ""}
+                />
+                {errors.jobTitle && (
+                  <span className='text-red-500 text-sm'>
+                    {errors.jobTitle}
+                  </span>
+                )}
+              </div>
+
+              <div>
+                <Input
+                  label='Portfolio URL'
+                  name='portfolio'
+                  value={form.portfolio}
+                  onChange={handleChange}
+                  className={errors.portfolio ? "border-red-500" : ""}
+                />
+                {errors.portfolio && (
+                  <span className='text-red-500 text-sm'>
+                    {errors.portfolio}
+                  </span>
+                )}
+              </div>
+
+              <div>
+                <Input
+                  label='LinkedIn URL'
+                  name='linkedin'
+                  value={form.linkedin}
+                  onChange={handleChange}
+                  className={errors.linkedin ? "border-red-500" : ""}
+                />
+                {errors.linkedin && (
+                  <span className='text-red-500 text-sm'>
+                    {errors.linkedin}
+                  </span>
+                )}
+              </div>
+
+              <div>
+                <Textarea
+                  label='About Me'
+                  name='about'
+                  value={form.about}
+                  onChange={handleChange}
+                  className={errors.about ? "border-red-500" : ""}
+                />
+                {errors.about && (
+                  <span className='text-red-500 text-sm'>{errors.about}</span>
+                )}
+              </div>
+
+              {errors.general && (
+                <div className='text-center text-red-600 font-medium'>
+                  {errors.general}
+                </div>
+              )}
             </div>
+
             <div className='w-full lg:w-1/3'>
               <FileUpload />
             </div>
           </div>
 
           <div className='flex justify-center'>
-            <Button type='submit' className='bg-[#183F5B] w-full sm:w-auto'>
-              Save
+            <Button
+              type='submit'
+              className='bg-[#183F5B] w-full sm:w-auto'
+              disabled={isSubmitting}>
+              {isSubmitting ? "Saving..." : "Save"}
             </Button>
           </div>
         </form>

@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import {
   Typography,
   Avatar,
@@ -14,12 +14,10 @@ import { ImageUpload } from "./ImageUpload";
 import { useNavigate } from "react-router-dom";
 import { CogIcon, UserIcon } from "@heroicons/react/24/outline";
 
-export function StepperWithContent() {
-  const navigate = useNavigate();
-
-  const [activeStep, setActiveStep] = React.useState(0);
-  const [isLastStep, setIsLastStep] = React.useState(false);
-  const [isFirstStep, setIsFirstStep] = React.useState(false);
+export function StepperWithContent({ handleStepChange }) {
+  const [activeStep, setActiveStep] = useState(0);
+  const [isLastStep, setIsLastStep] = useState(false);
+  const [isFirstStep, setIsFirstStep] = useState(false);
 
   return (
     <div className='w-full px-24 py-4'>
@@ -27,7 +25,7 @@ export function StepperWithContent() {
         activeStep={activeStep}
         isLastStep={(value) => setIsLastStep(value)}
         isFirstStep={(value) => setIsFirstStep(value)}>
-        <Step onClick={() => setActiveStep(0)}>
+        <Step onClick={() => handleStepChange(0, setActiveStep)}>
           <UserIcon className='h-5 w-5' />
           <div className='absolute -bottom-[4.5rem] w-max text-center'>
             <Typography
@@ -42,11 +40,7 @@ export function StepperWithContent() {
             </Typography>
           </div>
         </Step>
-        <Step
-          onClick={() => {
-            setActiveStep(1);
-            navigate("/career-info");
-          }}>
+        <Step onClick={() => handleStepChange(1, setActiveStep)}>
           <CogIcon className='h-5 w-5' />
           <div className='absolute -bottom-[4.5rem] w-max text-center'>
             <Typography
@@ -57,7 +51,7 @@ export function StepperWithContent() {
             <Typography
               color={activeStep === 1 ? "blue-gray" : "gray"}
               className='font-normal'>
-              career Information
+              Career Information
             </Typography>
           </div>
         </Step>
@@ -69,16 +63,60 @@ export function StepperWithContent() {
 export const PersonalInfo = () => {
   const navigate = useNavigate();
 
+  const [form, setForm] = useState({
+    fullName: "",
+    dob: "",
+    phone: "",
+    gender: "",
+    country: "",
+    city: "",
+    email: "mostafa9922m@gmail.com",
+  });
+
+  const [errors, setErrors] = useState({});
+
+  const validate = () => {
+    let temp = {};
+    temp.fullName = form.fullName ? "" : "Full Name is required.";
+    temp.dob = form.dob ? "" : "Date of birth is required.";
+    temp.phone = form.phone ? "" : "Phone Number is required.";
+    temp.gender = form.gender ? "" : "Gender is required.";
+    temp.country = form.country ? "" : "Country is required.";
+    temp.city = form.city ? "" : "City is required.";
+
+    setErrors(temp);
+    return Object.values(temp).every((x) => x === "");
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    navigate("/career-info");
+    if (validate()) {
+      localStorage.setItem("personalInfo", JSON.stringify(form));
+      navigate("/career-info");
+    }
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: value });
   };
 
   return (
     <div className='min-h-screen bg-white'>
       <NavMenu />
       <div className='mb-10'>
-        <StepperWithContent />
+        <StepperWithContent
+          handleStepChange={(step, setActiveStep) => {
+            if (step === 1) {
+              if (validate()) {
+                localStorage.setItem("personalInfo", JSON.stringify(form));
+                navigate("/career-info");
+              }
+            } else {
+              setActiveStep(step);
+            }
+          }}
+        />
       </div>
       <div className='container mx-auto px-4 py-10'>
         <div className='flex flex-col md:flex-row items-center justify-between mb-6'>
@@ -107,20 +145,58 @@ export const PersonalInfo = () => {
           </div>
 
           <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 px-2'>
-            <Input label='Full Name' type='text' />
-            <Input type='date' label='Day/Month/Year' />
-            <Input label='Phone Number' type='text' />
-            <Input value={"mostafa9922m@gmail.com"} type='text' disabled />
-            <Select label='Gender'>
-              <Option>Male</Option>
-              <Option>Female</Option>
-              <Option>Other</Option>
+            <Input
+              label='Full Name'
+              name='fullName'
+              value={form.fullName}
+              onChange={handleChange}
+              error={!!errors.fullName}
+              helperText={errors.fullName}
+            />
+            <Input
+              type='date'
+              label='Day/Month/Year'
+              name='dob'
+              value={form.dob}
+              onChange={handleChange}
+              error={!!errors.dob}
+              helperText={errors.dob}
+            />
+            <Input
+              label='Phone Number'
+              name='phone'
+              value={form.phone}
+              onChange={handleChange}
+              error={!!errors.phone}
+              helperText={errors.phone}
+            />
+            <Input value={form.email} type='text' disabled />
+            <Select
+              label='Gender'
+              value={form.gender}
+              onChange={(val) => setForm({ ...form, gender: val })}
+              error={!!errors.gender}>
+              <Option value='Male'>Male</Option>
+              <Option value='Female'>Female</Option>
+              <Option value='Other'>Other</Option>
             </Select>
-            <Select label='Country'>
-              <Option>Male</Option>
+            <Select
+              label='Country'
+              value={form.country}
+              onChange={(val) => setForm({ ...form, country: val })}
+              error={!!errors.country}>
+              <Option value='Egypt'>Egypt</Option>
+              <Option value='USA'>USA</Option>
+              <Option value='Germany'>Germany</Option>
             </Select>
-            <Select label='City'>
-              <Option>Male</Option>
+            <Select
+              label='City'
+              value={form.city}
+              onChange={(val) => setForm({ ...form, city: val })}
+              error={!!errors.city}>
+              <Option value='Cairo'>Cairo</Option>
+              <Option value='Giza'>Giza</Option>
+              <Option value='Alexandria'>Alexandria</Option>
             </Select>
           </div>
 
