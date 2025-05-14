@@ -22,7 +22,7 @@ const profileMenuItems = [
   { label: "Settings", icon: Cog6ToothIcon, to: "/settings" }, // Add actual route
   { label: "Inbox", icon: InboxArrowDownIcon, to: "#" }, // Add actual route
   { label: "Help", icon: LifebuoyIcon, to: "#" }, // Add actual route
-  { label: "Sign Out", icon: PowerIcon, to: "/login" }, 
+  { label: "Sign Out", icon: PowerIcon, to: "/login" },
 ];
 
 export function UserAvatar({ setLoggedIn }) {
@@ -30,7 +30,7 @@ export function UserAvatar({ setLoggedIn }) {
   const closeMenu = () => setIsMenuOpen(false);
 
   const handleSignOut = () => {
-    localStorage.removeItem("token");
+    localStorage.clear();
     setLoggedIn(false);
   };
   return (

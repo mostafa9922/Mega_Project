@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { NavMenu } from "./NavMenu";
 import {
   Avatar,
@@ -16,6 +16,7 @@ import {
 } from "@material-tailwind/react";
 import { CiClock2 } from "react-icons/ci";
 import { jwtDecode } from "jwt-decode";
+import axios from "axios";
 import { FaRegEdit } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa6";
 import { Footer } from "./Footer";
@@ -25,32 +26,26 @@ export const UserProfile = ({ loggedIn, setLoggedIn }) => {
   const token = localStorage.getItem("token");
   const user = jwtDecode(token);
   const [openCoverModal, setOpenCoverModal] = useState(false);
-  const [coverImage, setCoverImage] = useState(
-    "https://images.unsplash.com/photo-1682407186023-12c70a4a35e0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2832&q=80"
-  );
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [openCollapse, setOpenCollapse] = useState(false);
 
-  // Dynamic data objects
-  const [userInfo] = useState({
-    name: "Mostafa Abd El-Rasheed",
-    email: "mostafa9922m@gmail.com",
-    location: "Cairo, Egypt",
-    jobTitle: "Frontend Developer",
-    lastActive: "3 Hours ago",
+  const [userInfo, setUserInfo] = useState({
+    avatarUrl: "",
+    bio: "",
+    coverUrl: "",
+    createdAt: "",
+    email: "",
+    firstName: "",
+    fullName: "",
+    id: "",
+    jobTitle: "",
+    lastName: "",
+    location: "",
+    skills: [],
+    updatedAt: "",
+    username: "",
   });
-
-  const [aboutInfo, setAboutInfo] = useState({
-    about:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores voluptate similique earum blanditiis at laboriosam placeat voluptatem impedit, qui facere molestias tempora tempore. Culpa deserunt maxime maiores reprehenderit delectus eos!",
-  });
-
-  const [skills, setSkills] = useState([
-    { id: 1, name: "JavaScript & React" },
-    { id: 2, name: "HTML, CSS, Tailwind" },
-    { id: 3, name: "Embedded Systems (ATmega32, STM32)" },
-  ]);
 
   const [experiences, setExperiences] = useState([
     {
@@ -144,7 +139,7 @@ export const UserProfile = ({ loggedIn, setLoggedIn }) => {
         setIsLoading(true);
         setError(null);
         const newCoverUrl = URL.createObjectURL(file);
-        setCoverImage(newCoverUrl);
+        setUserInfo((prev) => ({ ...prev, coverUrl: newCoverUrl }));
         handleCloseCoverModal();
       } else {
         setError("Please upload a valid image file.");
@@ -180,25 +175,19 @@ export const UserProfile = ({ loggedIn, setLoggedIn }) => {
   // Open edit modal with item data
   const handleOpenEditModal = (item, section) => {
     setEditItem(item);
-    if (section === "about") {
-      setFormData({
-        section,
-        about: item.about || "",
-      });
-    } else {
-      setFormData({
-        section,
-        title: item.title || "",
-        company: item.company || "",
-        type: item.type || "",
-        duration: item.duration || "",
-        location: item.location || "",
-        description: item.description || "",
-        institution: item.institution || "",
-        degree: item.degree || "",
-        skillName: item.name || "",
-      });
-    }
+    setFormData({
+      section,
+      title: item.title || "",
+      company: item.company || "",
+      type: item.type || "",
+      duration: item.duration || "",
+      location: item.location || "",
+      description: item.description || "",
+      institution: item.institution || "",
+      degree: item.degree || "",
+      skillName: item.name || "",
+      about: item.about || "",
+    });
     setOpenEditModal(true);
   };
 
@@ -206,7 +195,7 @@ export const UserProfile = ({ loggedIn, setLoggedIn }) => {
   const handleAddSubmit = () => {
     const newId = Date.now();
     if (formData.section === "skills") {
-      setSkills((prev) => [...prev, { id: newId, name: formData.skillName }]);
+      setUserInfo((prev) => [...prev, { id: newId, name: formData.skillName }]);
     } else if (formData.section === "experiences") {
       setExperiences((prev) => [
         ...prev,
@@ -233,9 +222,9 @@ export const UserProfile = ({ loggedIn, setLoggedIn }) => {
   // Handle form submission for editing item
   const handleEditSubmit = () => {
     if (formData.section === "about") {
-      setAboutInfo((prev) => ({ ...prev, about: formData.about }));
+      setUserInfo((prev) => ({ ...prev, bio: formData.about }));
     } else if (formData.section === "skills") {
-      setSkills((prev) =>
+      setUserInfo((prev) =>
         prev.map((skill) =>
           skill.id === editItem.id
             ? { ...skill, name: formData.skillName }
@@ -270,6 +259,27 @@ export const UserProfile = ({ loggedIn, setLoggedIn }) => {
     setOpenEditModal(false);
   };
 
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_URL}/api/profiles/${user.nameid}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        const userFetchedData = response.data;
+        setUserInfo(userFetchedData);
+        console.log(userFetchedData);
+      } catch (error) {
+        console.error("Error fetching user profile:", error);
+      }
+    };
+    fetchUserProfile();
+  }, []);
+
   return (
     <div className='min-h-screen bg-gray-50'>
       <NavMenu loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
@@ -284,7 +294,9 @@ export const UserProfile = ({ loggedIn, setLoggedIn }) => {
         <div
           className='relative mb-10 md:mb-16 flex justify-end items-start pt-2 pr-2'
           style={{
-            backgroundImage: `url(${coverImage})`,
+            backgroundImage: `url(${
+              userInfo.coverUrl || import.meta.env.VITE_DEFAULT_COVER_IMAGE
+            })`,
             backgroundSize: "cover",
             backgroundPosition: "center",
             height: "400px",
@@ -314,7 +326,9 @@ export const UserProfile = ({ loggedIn, setLoggedIn }) => {
           </Button>
           <div className='absolute -bottom-10 left-4 sm:left-6'>
             <Avatar
-              src='https://docs.material-tailwind.com/img/face-2.jpg'
+              src={`${
+                userInfo.avatarUrl || import.meta.env.VITE_DEFAULT_AVATAR
+              }`}
               alt={`${userInfo.name}'s avatar`}
               size='xxl'
               variant='rounded'
@@ -368,14 +382,14 @@ export const UserProfile = ({ loggedIn, setLoggedIn }) => {
             <Typography
               variant='h2'
               className='text-2xl font-bold text-gray-900 md:text-3xl'>
-              {userInfo.name}
+              {userInfo.fullName}
             </Typography>
             <Typography className='text-gray-600 mb-2 text-sm sm:text-base'>
               {userInfo.email}
             </Typography>
             <div className='text-gray-500 flex items-center gap-2 mb-4 text-sm sm:text-base'>
               <CiClock2 className='text-xl' aria-hidden='true' />
-              <span>Last Active: {userInfo.lastActive}</span>
+              <span>Last Active: {}</span>
             </div>
             <div className='mb-5'>
               <ul className='text-gray-700 flex flex-wrap items-center gap-3'>
@@ -384,14 +398,14 @@ export const UserProfile = ({ loggedIn, setLoggedIn }) => {
                     className='text-xl text-gray-500'
                     aria-hidden='true'
                   />
-                  {userInfo.jobTitle}
+                  {}
                 </li>
                 <li className='flex items-center gap-2 border-2 p-1 rounded-md text-sm sm:text-base'>
                   <CiClock2
                     className='text-xl text-gray-500'
                     aria-hidden='true'
                   />
-                  {userInfo.location}
+                  {}
                 </li>
               </ul>
             </div>
@@ -413,11 +427,11 @@ export const UserProfile = ({ loggedIn, setLoggedIn }) => {
             </Typography>
             <FaRegEdit
               className='text-2xl sm:text-3xl border-2 border-[#D6DDEB] p-1 hover:bg-gray-100 transition-colors cursor-pointer'
-              onClick={() => handleOpenEditModal(aboutInfo, "about")}
+              onClick={() => handleOpenEditModal(userInfo.bio, "about")}
             />
           </div>
           <Typography className='text-gray-700 leading-relaxed text-base sm:text-lg'>
-            {aboutInfo.about}
+            {userInfo.bio || ""}
           </Typography>
         </Card>
 
@@ -441,21 +455,25 @@ export const UserProfile = ({ loggedIn, setLoggedIn }) => {
             </div>
           </div>
           <ul className='text-gray-700 flex flex-wrap items-center gap-3'>
-            {skills.map((skill) => (
-              <li
-                key={skill.id}
-                className='flex items-center gap-2 border-2 p-1 rounded-md text-sm sm:text-base'>
-                <CiClock2
-                  className='text-xl text-gray-500'
-                  aria-hidden='true'
-                />
-                {skill.name}
-                <FaRegEdit
-                  className='text-xl border-2 border-[#D6DDEB] p-0.5 hover:bg-gray-100 transition-colors cursor-pointer ml-2'
-                  onClick={() => handleOpenEditModal(skill, "skills")}
-                />
-              </li>
-            ))}
+            {userInfo.skills.length > 0 ? (
+              skills.map((skill) => (
+                <li
+                  key={skill.id}
+                  className='flex items-center gap-2 border-2 p-1 rounded-md text-sm sm:text-base'>
+                  <CiClock2
+                    className='text-xl text-gray-500'
+                    aria-hidden='true'
+                  />
+                  {skill.name}
+                  <FaRegEdit
+                    className='text-xl border-2 border-[#D6DDEB] p-0.5 hover:bg-gray-100 transition-colors cursor-pointer ml-2'
+                    onClick={() => handleOpenEditModal(skill, "skills")}
+                  />
+                </li>
+              ))
+            ) : (
+              <p>No skills</p>
+            )}
           </ul>
         </Card>
 
@@ -503,15 +521,6 @@ export const UserProfile = ({ loggedIn, setLoggedIn }) => {
               </div>
             </div>
           ))}
-          <Collapse open={openCollapse}>
-            <Card className='my-4 mx-auto w-full sm:w-8/12'>
-              <CardBody>
-                <Typography>
-                  Additional experiences would be listed here...
-                </Typography>
-              </CardBody>
-            </Card>
-          </Collapse>
           <Link
             className='text-[#183F5B] font-bold text-sm sm:text-base'
             onClick={toggleCollapse}>
@@ -559,15 +568,6 @@ export const UserProfile = ({ loggedIn, setLoggedIn }) => {
               </div>
             </div>
           ))}
-          <Collapse open={openCollapse}>
-            <Card className='my-4 mx-auto w-full sm:w-8/12'>
-              <CardBody>
-                <Typography>
-                  Additional educations would be listed here...
-                </Typography>
-              </CardBody>
-            </Card>
-          </Collapse>
           <Link
             className='text-[#183F5B] font-bold text-sm sm:text-base'
             onClick={toggleCollapse}>

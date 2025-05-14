@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { NavMenu } from "./NavMenu";
 import { Card, Typography } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
@@ -9,7 +9,7 @@ import { Footer } from "./Footer";
 
 function DefaultSidebar({ setLoggedIn, setPageselected, pageselected }) {
   const handleSignOut = () => {
-    localStorage.removeItem("token");
+    localStorage.clear();
     setLoggedIn(false);
   };
 
@@ -88,7 +88,7 @@ export const Settings = ({ loggedIn, setLoggedIn }) => {
             pageselected={pageselected}
           />
         ) : pageselected === "security" ? (
-          <SecuritySetting />
+          <SecuritySetting setLoggedIn={setLoggedIn} />
         ) : pageselected === "jobs" ? (
           <SavedJobs />
         ) : null}

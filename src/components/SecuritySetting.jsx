@@ -1,13 +1,18 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Typography, Button, Input } from "@material-tailwind/react";
 import { IoInformationCircleOutline } from "react-icons/io5";
 import axios from "axios";
+import { jwtDecode } from "jwt-decode";
+import { useNavigate } from "react-router-dom";
 
-export const SecuritySetting = () => {
+export const SecuritySetting = ({ setLoggedIn }) => {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [errors, setErrors] = useState({});
   const [successMessage, setSuccessMessage] = useState("");
+  const token = localStorage.getItem("token");
+  const { email, nameid } = jwtDecode(token);
+  const navigate = useNavigate();
 
   const validate = () => {
     const newErrors = {};
@@ -30,9 +35,11 @@ export const SecuritySetting = () => {
 
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}/api/change-password`,
-        { currentPassword, newPassword }
+        `${import.meta.env.VITE_API_URL}/auth/reset-password`,
+        { currentPassword, newPassword, token, email }
       );
+      console.log(response.data);
+
       setSuccessMessage("Password changed successfully.");
       setErrors({});
       setCurrentPassword("");
@@ -45,7 +52,25 @@ export const SecuritySetting = () => {
     }
   };
 
-  const handleCloseAccount = () => {};
+  const handleCloseAccount = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.delete(
+        `${import.meta.env.VITE_API_URL}/api/profiles/${nameid}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setLoggedIn(false);
+      navigate("/sign-up");
+      console.log(response);
+      console.log("dd");
+    } catch (error) {
+      console.error("Error fetching user profile:", error);
+    }
+  };
 
   return (
     <div className='relative flex flex-col gap-6 p-6 w-full min-h-[90vh]'>
@@ -124,12 +149,14 @@ export const SecuritySetting = () => {
       </div>
 
       {/* Close Account */}
-      <button
-        onClick={handleCloseAccount}
-        className='absolute bottom-2 right-2 bg-gray-300 text-red-600 flex items-center gap-2 rounded-full px-4 py-2 hover:bg-red-600 hover:text-white transition duration-300 ease-in-out'>
-        <span>Close Account</span>
-        <IoInformationCircleOutline className='text-2xl' />
-      </button>
+      <form onSubmit={handleCloseAccount}>
+        <button
+          type='submit'
+          className='absolute bottom-2 right-2 bg-gray-300 text-red-600 flex items-center gap-2 rounded-full px-4 py-2 hover:bg-red-600 hover:text-white transition duration-300 ease-in-out'>
+          <span>Close Account</span>
+          <IoInformationCircleOutline className='text-2xl' />
+        </button>
+      </form>
     </div>
   );
 };
