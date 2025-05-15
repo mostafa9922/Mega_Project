@@ -8,7 +8,12 @@ import { BsThreeDots } from "react-icons/bs";
 import { FileUpload } from "./FileUpload";
 import { jwtDecode } from "jwt-decode";
 
-export const ProfileSetting = ({ pageselected, setPageselected }) => {
+export const ProfileSetting = ({
+  pageselected,
+  setPageselected,
+  userInfo,
+  setUserInfo,
+}) => {
   const initialState = {
     email: "",
     fullName: "",
@@ -86,6 +91,8 @@ export const ProfileSetting = ({ pageselected, setPageselected }) => {
     setErrors(newErrors);
     return isValid;
   };
+
+  const handleSubmit2 = async (e) => {};
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -213,7 +220,7 @@ export const ProfileSetting = ({ pageselected, setPageselected }) => {
                 </div>
                 <BsThreeDots />
               </div>
-              <FileUpload />
+              <FileUpload userInfo={userInfo} setUserInfo={setUserInfo} />
             </div>
           </div>
 

@@ -10,6 +10,11 @@ import { Link } from "react-router-dom";
 
 const allJobs = new Array(73).fill({}).map((_, index) => ({ id: index + 1 })); // Add unique IDs
 
+
+
+
+
+
 export const Jobs = () => {
   const [active, setActive] = useState(1);
   const jobsPerPage = 10;

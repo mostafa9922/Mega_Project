@@ -25,6 +25,13 @@ import { History } from "./History";
 export default function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [resetPassStatus, setResetPassStatus] = useState(false);
+  const [userInfo, setUserInfo] = useState({
+    educations: [],
+    personal_information: {},
+    projects: [],
+    skills: [],
+    work_experiences: [],
+  });
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -71,7 +78,16 @@ export default function App() {
         )}
         {loggedIn && (
           <>
-            <Route path='/userprofile' element={<UserProfile />} />
+            <Route
+              path='/userprofile'
+              element={
+                <UserProfile
+                  loggedIn={loggedIn}
+                  setLoggedIn={setLoggedIn}
+                  userData={userInfo}
+                />
+              }
+            />
             <Route
               path='/dashboard'
               element={
@@ -82,7 +98,12 @@ export default function App() {
             <Route
               path='/settings'
               element={
-                <Settings loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
+                <Settings
+                  loggedIn={loggedIn}
+                  setLoggedIn={setLoggedIn}
+                  userInfo={userInfo}
+                  setUserInfo={setUserInfo}
+                />
               }
             />
           </>

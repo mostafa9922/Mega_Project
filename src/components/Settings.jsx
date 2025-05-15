@@ -67,7 +67,7 @@ function DefaultSidebar({ setLoggedIn, setPageselected, pageselected }) {
   );
 }
 
-export const Settings = ({ loggedIn, setLoggedIn }) => {
+export const Settings = ({ loggedIn, setLoggedIn, userInfo, setUserInfo }) => {
   const [pageselected, setPageselected] = useState(() => {
     return localStorage.getItem("selectedPage") || "profile";
   });
@@ -86,6 +86,8 @@ export const Settings = ({ loggedIn, setLoggedIn }) => {
           <ProfileSetting
             setPageselected={setPageselected}
             pageselected={pageselected}
+            userInfo={userInfo}
+            setUserInfo={setUserInfo}
           />
         ) : pageselected === "security" ? (
           <SecuritySetting setLoggedIn={setLoggedIn} />

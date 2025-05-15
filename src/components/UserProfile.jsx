@@ -9,9 +9,7 @@ import {
   DialogFooter,
   Input,
   Typography,
-  Collapse,
   Card,
-  CardBody,
   Textarea,
 } from "@material-tailwind/react";
 import { CiClock2 } from "react-icons/ci";
@@ -22,7 +20,7 @@ import { FaPlus } from "react-icons/fa6";
 import { Footer } from "./Footer";
 import { Link } from "react-router-dom";
 
-export const UserProfile = ({ loggedIn, setLoggedIn }) => {
+export const UserProfile = ({ loggedIn, setLoggedIn, userData }) => {
   const token = localStorage.getItem("token");
   const user = jwtDecode(token);
   const [openCoverModal, setOpenCoverModal] = useState(false);
@@ -47,64 +45,64 @@ export const UserProfile = ({ loggedIn, setLoggedIn }) => {
     username: "",
   });
 
-  const [experiences, setExperiences] = useState([
-    {
-      id: 1,
-      title: "Product Designer",
-      company: "Twitter",
-      type: "Full-Time",
-      duration: "Jun 2019 - Present (1y 1m)",
-      location: "Manchester, UK",
-      description:
-        "Created and executed social media plan for 10 brands utilizing multiple features and content types to increase brand outreach, engagement, and leads.",
-    },
-    {
-      id: 2,
-      title: "Growth Marketing Designer",
-      company: "GoDaddy",
-      type: "Full-Time",
-      duration: "Jun 2011 - May 2019 (8y)",
-      location: "Manchester, UK",
-      description:
-        "Developed digital marketing strategies, activation plans, proposals, contests and promotions for client initiatives.",
-    },
-    {
-      id: 3,
-      title: "UI/UX Designer",
-      company: "TechCorp",
-      type: "Contract",
-      duration: "Jan 2010 - May 2011 (1y 4m)",
-      location: "London, UK",
-      description:
-        "Designed user interfaces and improved user experience for web applications, increasing user retention by 20%.",
-    },
-  ]);
+  // const [experiences, setExperiences] = useState([
+  //   {
+  //     id: 1,
+  //     title: "Product Designer",
+  //     company: "Twitter",
+  //     type: "Full-Time",
+  //     duration: "Jun 2019 - Present (1y 1m)",
+  //     location: "Manchester, UK",
+  //     description:
+  //       "Created and executed social media plan for 10 brands utilizing multiple features and content types to increase brand outreach, engagement, and leads.",
+  //   },
+  //   {
+  //     id: 2,
+  //     title: "Growth Marketing Designer",
+  //     company: "GoDaddy",
+  //     type: "Full-Time",
+  //     duration: "Jun 2011 - May 2019 (8y)",
+  //     location: "Manchester, UK",
+  //     description:
+  //       "Developed digital marketing strategies, activation plans, proposals, contests and promotions for client initiatives.",
+  //   },
+  //   {
+  //     id: 3,
+  //     title: "UI/UX Designer",
+  //     company: "TechCorp",
+  //     type: "Contract",
+  //     duration: "Jan 2010 - May 2011 (1y 4m)",
+  //     location: "London, UK",
+  //     description:
+  //       "Designed user interfaces and improved user experience for web applications, increasing user retention by 20%.",
+  //   },
+  // ]);
 
-  const [educations, setEducations] = useState([
-    {
-      id: 1,
-      institution: "Harvard University",
-      degree: "Postgraduate degree, Applied Psychology",
-      duration: "2010 - 2012",
-      description:
-        "As an Applied Psychologist in the field of Consumer and Society, I am specialized in creating business opportunities by observing, analyzing, researching and changing behaviour.",
-    },
-    {
-      id: 2,
-      institution: "University of Toronto",
-      degree: "Bachelor of Arts, Visual Communication",
-      duration: "2005 - 2009",
-      description: "",
-    },
-    {
-      id: 3,
-      institution: "MIT",
-      degree: "Certificate, Advanced Programming",
-      duration: "2012 - 2013",
-      description:
-        "Completed intensive course on modern programming techniques.",
-    },
-  ]);
+  // const [educations, setEducations] = useState([
+  //   {
+  //     id: 1,
+  //     institution: "Harvard University",
+  //     degree: "Postgraduate degree, Applied Psychology",
+  //     duration: "2010 - 2012",
+  //     description:
+  //       "As an Applied Psychologist in the field of Consumer and Society, I am specialized in creating business opportunities by observing, analyzing, researching and changing behaviour.",
+  //   },
+  //   {
+  //     id: 2,
+  //     institution: "University of Toronto",
+  //     degree: "Bachelor of Arts, Visual Communication",
+  //     duration: "2005 - 2009",
+  //     description: "",
+  //   },
+  //   {
+  //     id: 3,
+  //     institution: "MIT",
+  //     degree: "Certificate, Advanced Programming",
+  //     duration: "2012 - 2013",
+  //     description:
+  //       "Completed intensive course on modern programming techniques.",
+  //   },
+  // ]);
 
   // Add portfolios state
   const [portfolios, setPortfolios] = useState([]);
@@ -259,26 +257,26 @@ export const UserProfile = ({ loggedIn, setLoggedIn }) => {
     setOpenEditModal(false);
   };
 
-  useEffect(() => {
-    const fetchUserProfile = async () => {
-      try {
-        const response = await axios.get(
-          `${import.meta.env.VITE_API_URL}/api/profiles/${user.nameid}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        const userFetchedData = response.data;
-        setUserInfo(userFetchedData);
-        console.log(userFetchedData);
-      } catch (error) {
-        console.error("Error fetching user profile:", error);
-      }
-    };
-    fetchUserProfile();
-  }, []);
+  // useEffect(() => {
+  //   const fetchUserProfile = async () => {
+  //     try {
+  //       const response = await axios.get(
+  //         `${import.meta.env.VITE_API_URL}/api/profiles/${user.nameid}`,
+  //         {
+  //           headers: {
+  //             Authorization: `Bearer ${token}`,
+  //           },
+  //         }
+  //       );
+  //       const userFetchedData = response.data;
+  //       setUserInfo(userFetchedData);
+  //       console.log(userFetchedData);
+  //     } catch (error) {
+  //       console.error("Error fetching user profile:", error);
+  //     }
+  //   };
+  //   fetchUserProfile();
+  // }, []);
 
   return (
     <div className='min-h-screen bg-gray-50'>
@@ -455,16 +453,16 @@ export const UserProfile = ({ loggedIn, setLoggedIn }) => {
             </div>
           </div>
           <ul className='text-gray-700 flex flex-wrap items-center gap-3'>
-            {userInfo.skills.length > 0 ? (
-              skills.map((skill) => (
+            {userData.skills.length > 0 ? (
+              userData.skills.map((skill, index) => (
                 <li
-                  key={skill.id}
+                  key={index}
                   className='flex items-center gap-2 border-2 p-1 rounded-md text-sm sm:text-base'>
                   <CiClock2
                     className='text-xl text-gray-500'
                     aria-hidden='true'
                   />
-                  {skill.name}
+                  {skill.skill_name}
                   <FaRegEdit
                     className='text-xl border-2 border-[#D6DDEB] p-0.5 hover:bg-gray-100 transition-colors cursor-pointer ml-2'
                     onClick={() => handleOpenEditModal(skill, "skills")}
@@ -488,8 +486,8 @@ export const UserProfile = ({ loggedIn, setLoggedIn }) => {
               onClick={() => handleOpenAddModal("experiences")}
             />
           </div>
-          {experiences.map((exp) => (
-            <div key={exp.id} className='flex gap-4 w-full sm:w-[80%]'>
+          {userData.work_experiences.map((exp, index) => (
+            <div key={index} className='flex gap-4 w-full sm:w-[80%]'>
               <Avatar
                 src='https://docs.material-tailwind.com/img/face-2.jpg'
                 alt='avatar'
@@ -498,7 +496,7 @@ export const UserProfile = ({ loggedIn, setLoggedIn }) => {
               <div className='flex flex-col w-full border-b-2 pb-4'>
                 <div className='flex justify-between items-center'>
                   <Typography variant='h5' className='text-[#25324B]'>
-                    {exp.title}
+                    {exp.job_title}
                   </Typography>
                   <FaRegEdit
                     className='text-2xl sm:text-3xl border-2 border-[#D6DDEB] p-1 hover:bg-gray-100 transition-colors cursor-pointer'
@@ -521,11 +519,6 @@ export const UserProfile = ({ loggedIn, setLoggedIn }) => {
               </div>
             </div>
           ))}
-          <Link
-            className='text-[#183F5B] font-bold text-sm sm:text-base'
-            onClick={toggleCollapse}>
-            Show 3 more experiences
-          </Link>
         </div>
 
         {/* Education Section */}
@@ -539,8 +532,8 @@ export const UserProfile = ({ loggedIn, setLoggedIn }) => {
               onClick={() => handleOpenAddModal("educations")}
             />
           </div>
-          {educations.map((edu) => (
-            <div key={edu.id} className='flex gap-4 w-full sm:w-[80%]'>
+          {userData.educations.map((edu, index) => (
+            <div key={index} className='flex gap-4 w-full sm:w-[80%]'>
               <Avatar
                 src='https://docs.material-tailwind.com/img/face-2.jpg'
                 alt='avatar'
@@ -568,11 +561,6 @@ export const UserProfile = ({ loggedIn, setLoggedIn }) => {
               </div>
             </div>
           ))}
-          <Link
-            className='text-[#183F5B] font-bold text-sm sm:text-base'
-            onClick={toggleCollapse}>
-            Show 2 more Educations
-          </Link>
         </div>
 
         {/* Portfolios Section */}
