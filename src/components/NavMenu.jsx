@@ -75,6 +75,17 @@ function NavList({ loggedIn, setLoggedIn }) {
           Jobs
         </Link>
       </Typography>
+      <Typography
+        as='li'
+        variant='small'
+        color='blue-gray'
+        className='p-1 font-medium'>
+        <Link
+          to='https://9b96-34-150-218-83.ngrok-free.app/'
+          className='flex items-center text-white'>
+          Job Market Analytics
+        </Link>
+      </Typography>
       <div className='w-[15%]'>
         <UserAvatar loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
       </div>

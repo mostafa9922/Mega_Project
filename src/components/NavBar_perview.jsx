@@ -119,6 +119,17 @@ function NavList({ isMobile = false, loggedIn, setLoggedIn }) {
           jobs
         </Link>
       </Typography>
+      <Typography
+        as='li'
+        variant='small'
+        color='blue-gray'
+        className='p-1 font-medium'>
+        <Link
+          to='https://9b96-34-150-218-83.ngrok-free.app/'
+          className='flex items-center text-[#183F5B]'>
+          Job Market Analytics
+        </Link>
+      </Typography>
       <div className='w-[15%]'>
         <UserAvatar />
       </div>
