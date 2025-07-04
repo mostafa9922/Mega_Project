@@ -70,7 +70,7 @@ export function SignUp({ loggedIn, SetLoggedIn }) {
     setIsSubmitting(true);
     try {
       await axios.post(
-        `${import.meta.env.API_URL}/api/auth/register`,
+        `${import.meta.env.VITE_API_URL}/api/auth/register`,
         formData
       );
       setFormData({ username: "", email: "", password: "" }); // Clear form data on success
