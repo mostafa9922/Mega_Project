@@ -50,7 +50,7 @@ export function LogIn({ setLoggedIn }) {
     setIsSubmitting(true);
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}/api/auth/login`,
+        `${import.meta.env.API_URL}/api/auth/login`,
         formData
       );
       const token = response.data.token;
