@@ -20,7 +20,7 @@ import { CareerInfo } from "./components/CareerInfo";
 import { JobDetails } from "./components/JobDetails";
 import { CompanyDetials } from "./components/CompanyDetials";
 import { JobSearch } from "./components/JobSearch";
-import { History } from "./History";
+import { History } from "./components/History";
 
 export default function App() {
   const [loggedIn, setLoggedIn] = useState(false);
